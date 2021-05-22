@@ -1,0 +1,7 @@
+[subsurface]
+name=Subsurface Divelog
+baseurl=https://download.opensuse.org/repositories/home:/Subsurface-Divelog/Fedora_$releasever/
+type=rpm-md
+enabled=1
+gpgcheck=1
+gpgkey=https://download.opensuse.org/repositories/home:/Subsurface-Divelog/Fedora_$releasever/repodata/repomd.xml.key

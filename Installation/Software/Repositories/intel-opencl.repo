@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:jdanecki:intel-opencl]
+name=Intel OpenCL
+baseurl=https://download.copr.fedorainfracloud.org/results/jdanecki/intel-opencl/fedora-$releasever-$basearch/
+type=rpm-md
+enabled=1
+enabled_metadata=1
+skip_if_unavailable=True
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://download.copr.fedorainfracloud.org/results/jdanecki/intel-opencl/pubkey.gpg
