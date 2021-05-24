@@ -7,19 +7,29 @@
 
 
 ManageXFS_Scrub() {
-    echo "Scrubbing XFS partitions..."
+    echo "Scrubbing XFS file systems..."
 
-    # Checking integrity of the metadata objects and automatically repairing from other metadata if there exists redundant data structures which are intact
-    sudo xfs_scrub /boot
+    for XFSFILESYSTEMMOUNTPOINT in $(findmnt --types xfs --output "TARGET" --noheadings --list)
+    do
+        # Checking integrity of the metadata objects and automatically repairing from other metadata if there exists redundant data structures which are intact
+        sudo xfs_scrub $XFSFILESYSTEMMOUNTPOINT && echo "XFS file system mounted at $XFSFILESYSTEMMOUNTPOINT scrubbing completed!"
+    done
 
-    echo "XFS partitions scrubbing script completed!"
+    echo "XFS file systems scrubbing script completed!"
 }
 
 ManageXFS_Repair() {
     echo "Repairing XFS file systems..."
 
-    # Checking and repairing corrupt or damaged inode, inode blockmap, inode allocation map, inode size, directories, pathnames, link counts, freemap and super blocks
-    sudo xfs_repair /dev/sda2
+    for XFSFILESYSTEMMOUNTPOINT in $(findmnt --types xfs --output "SOURCE" --noheadings --list)
+    do
+        sudo umount $XFSFILESYSTEMMOUNTPOINT
+
+        # Checking and repairing corrupt or damaged inode, inode blockmap, inode allocation map, inode size, directories, pathnames, link counts, freemap and super blocks
+        sudo xfs_repair $XFSFILESYSTEMMOUNTPOINT && echo "XFS file system mounted at $XFSFILESYSTEMMOUNTPOINT repairing completed!"
+
+        sudo mount $XFSFILESYSTEMMOUNTPOINT
+    done
 
     echo "XFS file systems repairing script completed!"
 }
@@ -27,8 +37,11 @@ ManageXFS_Repair() {
 ManageXFS_Defragment() {
     echo "Defragmenting XFS file systems..."
 
-    # Merging file extents in the file system 
-    sudo xfs_fsr /boot
+    for XFSFILESYSTEMMOUNTPOINT in $(findmnt --types xfs --output "TARGET" --noheadings --list)
+    do
+        # Merging file extents in the file system 
+        sudo xfs_fsr && echo "XFS file system mounted at $XFSFILESYSTEMMOUNTPOINT defragmenting completed!"
+    done
 
     echo "XFS file systems defragmenting script completed!"
 }

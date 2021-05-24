@@ -23,6 +23,8 @@ clear-clipboard=30
 dark-theme=true
 database-lock-timeout=10
 first-start-screen=true
+generator-use-numbers=true
+generator-use-symbols=true
 remember-composite-key=true
 remember-unlock-method=true
 sort-order='a-z'
@@ -52,6 +54,7 @@ window-maximized=false
 [org/gnome/boxes]
 first-run=false
 view='icon-view'
+window-maximized=true
 
 [org/gnome/calculator]
 accuracy=9
@@ -97,7 +100,7 @@ last-panel='usage'
 folder-children=['05ae49fd-b03a-4b58-9aca-aa5b0ba26556', '15c6ecf1-66f4-4d5f-974c-a9aa46de5edf', '2b5c73bd-b97a-4b66-aaed-a69f68eba2ac', '3c7908f9-82cc-4e98-90e6-3355ade6ecfc', '4178b274-3eb9-4964-926f-aa8c94c2bf66', '560c3d29-d8df-4986-ad01-c03203f78598', '69bad05f-81ad-45af-8f6a-9cb91623430a', '74c66ea8-2e4e-4bf1-a584-c7ff115d0b9c', '846acbb7-de8f-4f36-aee9-5c2c9ff181a3', '96b741d2-1eb2-4cb8-9319-394b182ad1cf', 'Utilities', 'YaST']
 
 [org/gnome/desktop/app-folders/folders/05ae49fd-b03a-4b58-9aca-aa5b0ba26556]
-apps=['org.gnome.Contacts.desktop', 'mozilla-thunderbird.desktop', 'skypeforlinux.desktop']
+apps=['org.gnome.Contacts.desktop', 'mozilla-thunderbird.desktop', 'skypeforlinux.desktop', 'discord.desktop', 'com.discordapp.Discord.desktop']
 name='Communication'
 translate=false
 
@@ -107,7 +110,7 @@ name='Productivity'
 translate=false
 
 [org/gnome/desktop/app-folders/folders/2b5c73bd-b97a-4b66-aaed-a69f68eba2ac]
-apps=['org.gnome.Documents.desktop', 'org.gnome.Evince.desktop', 'simple-scan.desktop', 'org.gnome.Notes.desktop', 'org.gnome.Books.desktop', 'foliate.desktop', 'scribus.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Characters.desktop']
+apps=['org.gnome.Documents.desktop', 'org.gnome.Evince.desktop', 'simple-scan.desktop', 'org.gnome.Notes.desktop', 'org.gnome.Books.desktop', 'com.github.johnfactotum.Foliate.desktop', 'scribus.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Characters.desktop']
 name='Office'
 translate=false
 
@@ -127,7 +130,7 @@ name='Sound'
 translate=false
 
 [org/gnome/desktop/app-folders/folders/69bad05f-81ad-45af-8f6a-9cb91623430a]
-apps=['vlc.desktop', 'smartcode-stremio.desktop', 'fr.handbrake.ghb.desktop', 'com.blackmagicdesign.resolve.desktop', 'com.blackmagicdesign.resolve-Panels.desktop', 'com.blackmagicdesign.rawplayer.desktop', 'com.blackmagicdesign.rawspeedtest.desktop', 'com.blackmagicdesign.resolve-CaptureLogs.desktop', 'com.blackmagicdesign.resolve-Installer.desktop', 'io.github.jliljebl.Flowblade.desktop', 'gmic_qt.desktop', 'zart.desktop', 'calf.desktop']
+apps=['vlc.desktop', 'smartcode-stremio.desktop', 'io.webtorrent.WebTorrent.desktop', 'fr.handbrake.ghb.desktop', 'com.blackmagicdesign.resolve.desktop', 'com.blackmagicdesign.resolve-Panels.desktop', 'com.blackmagicdesign.rawplayer.desktop', 'com.blackmagicdesign.rawspeedtest.desktop', 'com.blackmagicdesign.resolve-CaptureLogs.desktop', 'com.blackmagicdesign.resolve-Installer.desktop', 'io.github.jliljebl.Flowblade.desktop', 'gmic_qt.desktop', 'zart.desktop', 'calf.desktop']
 name='Movies'
 translate=false
 
@@ -157,9 +160,6 @@ translate=true
 categories=['X-SuSE-YaST']
 name='suse-yast.directory'
 translate=true
-
-[org/gnome/desktop/background]
-picture-uri='file:///usr/share/backgrounds/Stormy-Seas.jpg'
 
 [org/gnome/desktop/calendar]
 show-weekdate=true
@@ -242,8 +242,7 @@ remove-old-trash-files=true
 report-technical-problems=false
 
 [org/gnome/desktop/screensaver]
-lock-delay=uint32 0
-picture-uri='file:///usr/share/backgrounds/Stormy-Seas.jpg'
+lock-delay=uint32 600
 
 [org/gnome/desktop/search-providers]
 disabled=['org.gnome.Documents.desktop', 'org.gnome.Notes.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Characters.desktop', 'org.gnome.Calculator.desktop', 'firefox.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Software.desktop', 'org.gnome.Boxes.desktop']
@@ -349,7 +348,7 @@ open-recent=false
 [org/gnome/gedit/state/window]
 bottom-panel-active-page='GeditExternalToolsShellOutput'
 bottom-panel-size=140
-side-panel-active-page='GeditWindowDocumentsPanel'
+side-panel-active-page='GeditFileBrowserPanel'
 side-panel-size=200
 state=87168
 
@@ -384,6 +383,9 @@ sort-order=0
 enable-fingerprint-authentication=false
 enable-password-authentication=true
 enable-smartcard-authentication=false
+
+[org/gnome/logs]
+ignore-warning=true
 
 [org/gnome/maps]
 map-type='MapsStreetSource'
@@ -485,8 +487,9 @@ sleep-inactive-ac-type='suspend'
 sleep-inactive-battery-timeout=3600
 
 [org/gnome/settings-daemon/plugins/xsettings]
-antialiasing='grayscale'
+antialiasing='rgba'
 hinting='slight'
+rgba-order='rgb'
 
 [org/gnome/shell]
 app-picker-view=uint32 1

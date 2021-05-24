@@ -6,18 +6,31 @@
 
 
 
-Load_KickstartAnswerFile(){
-    echo
+Load_KickstartAnswerFile() {
     read -p "Would you like to configure a default Kickstart answer file? (y/ anything else to select a file): "
 
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        KICKSTARTANSWERFILE="Configuration_Kickstart-FedoraWorkstation.cfg"
+        KICKSTARTANSWERFILENAME="Configuration_Kickstart-FedoraWorkstation.cfg"
     else
         read -p "Paste a Kickstart answer file name (with extension): " "KICKSTARTANSWERFILENAME"
     fi
 
-    KICKSTARTANSWERFILE=$WORKINGDIRECTORY/$KICKSTARTANSWERFILENAME
+    # Checking for existence of a Kickstart answer file
+    if [[ -f $WORKINGDIRECTORY/$KICKSTARTANSWERFILENAME ]]
+    then
+        KICKSTARTANSWERFILE="$WORKINGDIRECTORY/$KICKSTARTANSWERFILENAME"
+    else
+        echo "Kickstart answer file does not exist!"
+        read -p "Would you like to configure another Kickstart answer file? (y/ anything else to skip): "
+
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            Load_KickstartAnswerFile
+        else
+            exit 0;
+        fi
+    fi
 }
 
 Configure_Networking() {
@@ -41,26 +54,26 @@ Configure_Networking() {
     sed --in-place 's/\(.*--wpakey=\)[^ ]*\( .*\)/\1"'$WIFIPASSWORD'"\2/' "$KICKSTARTANSWERFILE"
     sed --in-place 's/\(.*password \)[^ ]*\( .*\)/\1"'$WIFIPASSWORD'"\2/' "$KICKSTARTANSWERFILE"
 
-    echo "Netwoking configuration script completed!"
+    echo "Netwoking configuring script completed!"
 }
 
 Configure_Users() {
     echo "Configuring users..."
 
-    # Modifying administrator's account password
+    # Modifying administrators' account password
     read -p "Type the administrator's password: " "ROOTSPASSWORD"
     read -p "Would you like the password encrypted? (y/ anything else to skip): "
 
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        ENCRYPTEDROOTSPASSWORD=$(python -c 'import crypt; print(crypt.crypt("'$ROOTSPASSWORD'", crypt.METHOD_SHA512))')
+        ENCRYPTEDROOTSPASSWORD=$(python -c 'import crypt; print(crypt.crypt("'$ROOTPASSWORD'", crypt.METHOD_SHA512))')
 
         sed --in-place 's%rootpw .*%rootpw --lock '$ENCRYPTEDROOTSPASSWORD' --iscrypted%' "$KICKSTARTANSWERFILE"
     else
         sed --in-place 's%rootpw .*%rootpw --lock '$ROOTSPASSWORD'%' "$KICKSTARTANSWERFILE"
     fi
 
-    # Modifying user's account name and password
+    # Modifying users' account name and password
     read -p "Type the user's name and surname: " USERSNAME USERSSURNAME
 
     sed --in-place 's/^user .*/user --groups=wheel --name='$USERSNAME' --gecos="'$USERSNAME' '$USERSSURNAME'" --password=""/' "$KICKSTARTANSWERFILE"
@@ -77,13 +90,13 @@ Configure_Users() {
         sed --in-place '/^user/ s/--password=""/--password='$USERSPASSWORD'/' "$KICKSTARTANSWERFILE"
     fi
 
-    echo "Users configuration script completed!"
+    echo "Users configuring script completed!"
 }
 
 Configure_DiskPartitioning() {
     echo "Configuring disk partitioning..."
 
-    # Modifying user's Btrfs subvolume name
+    # Modifying user's Btrfs subvolume's name
     # Not asking for a user's name twice if a users configuring script has been run
     if [[ -z $USERSNAME ]]
     then
@@ -134,7 +147,7 @@ Configure_DiskPartitioning() {
         sed --in-place '/part btrfs/ s/ --encrypted=.*//' "$KICKSTARTANSWERFILE"
     fi
 
-    echo "Disk partitioning configuration script completed!"
+    echo "Disk partitioning configurating script completed!"
 }
 
 
@@ -171,5 +184,6 @@ Menu() {
 COLUMNS=1
 WORKINGDIRECTORY="$(pwd)/Installation"
 
+echo
 Load_KickstartAnswerFile
 Menu

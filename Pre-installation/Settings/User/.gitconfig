@@ -1,0 +1,5 @@
+[core]
+	editor = code -wait
+[user]
+	name = Mislav Volaj
+	email = 60037331+MislavVolaj@users.noreply.github.com

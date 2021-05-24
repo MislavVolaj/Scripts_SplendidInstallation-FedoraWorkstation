@@ -9,14 +9,19 @@
 Restore_MozillaFirefoxProfiles() {
     echo "Restoring Mozilla Firefox profile..."
 
-    # Deleting current Mozilla Firefox profile
-    sudo rm -rf $HOME/.mozilla/firefox/*
+    if [[ -f $WORKINGDIRECTORY/Backup_MozillaFirefoxProfiles.tar.zst ]]
+    then
+        # Deleting current Mozilla Firefox profile
+        sudo rm -rf $HOME/.mozilla/firefox/*
 
-    # Creating Mozilla Firefox profile directory
-    mkdir --parents $HOME/.mozilla/firefox
+        # Creating Mozilla Firefox profile directory
+        mkdir --parents $HOME/.mozilla/firefox
 
-    # Extracting backed up Mozilla Firefox profile
-    tar --extract --zstd --xattrs --file="$WORKINGDIRECTORY"/../Backup/Backup_MozillaFirefoxProfiles.tar.zst --directory $HOME/.mozilla/firefox/
+        # Extracting backed up Mozilla Firefox profile
+        tar --extract --zstd --xattrs --file="$WORKINGDIRECTORY"/Backup_MozillaFirefoxProfiles.tar.zst --directory $HOME/.mozilla/firefox/
+    else
+        echo "Skipping Mozilla Firefox profile restoration because the backup was not found!"
+    fi
 
     echo "Mozilla Firefox profiles restoration script completed!"
 }
@@ -24,14 +29,19 @@ Restore_MozillaFirefoxProfiles() {
 Restore_MozillaThunderbirdProfiles() {
     echo "Restoring Mozilla Thunderbird profiles..."
 
-    # Deleting current Mozilla Thunderbird profile
-    sudo rm -rf $HOME/.thunderbird/*
+    if [[ -f $WORKINGDIRECTORY/Backup_MozillaThunderbirdProfiles.tar.zst ]]
+    then
+        # Deleting current Mozilla Thunderbird profile
+        sudo rm -rf $HOME/.thunderbird/*
 
-    # Creating Mozilla Firefox profile directory
-    mkdir --parents $HOME/.thunderbird
+        # Creating Mozilla Firefox profile directory
+        mkdir --parents $HOME/.thunderbird
 
-    # Extracting backed up Mozilla Thunderbird profile
-    tar --extract --zstd --xattrs --file="$WORKINGDIRECTORY"/../Backup/Backup_MozillaThunderbirdProfiles.tar.zst --directory $HOME/.thunderbird/
+        # Extracting backed up Mozilla Thunderbird profile
+        tar --extract --zstd --xattrs --file="$WORKINGDIRECTORY"/Backup_MozillaThunderbirdProfiles.tar.zst --directory $HOME/.thunderbird/
+    else
+        echo "Skipping Mozilla Thunderbird profile restoration because the backup was not found!"
+    fi
 
     echo "Mozilla Thunderbird profiles restoration script completed!"
 }
@@ -64,6 +74,6 @@ Menu() {
 
 
 COLUMNS=1
-WORKINGDIRECTORY="$(pwd)/Pre-installation/Settings"
+WORKINGDIRECTORY="$(pwd)/Pre-installation/Backup"
 
 Menu

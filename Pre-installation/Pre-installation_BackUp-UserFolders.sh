@@ -7,18 +7,37 @@
 
 
 BackUp_UserFolders() {
-    echo "Backing up user folders..."
+    read -p "Would you like to back up other users' folders too? (y/ anything else to n): "
 
-    mkdir --parents "$WORKINGDIRECTORY"/$(whoami)
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        for USERSNAME in $(cat /etc/passwd | grep "/home" | cut --delimiter=: --fields=1)
+        do
+            echo "Backing up $USERSNAME's folders..."
 
-    for FOLDER in ${BACKUPFOLDERS[@]}
-    do
-        rsync --archive --human-readable --info=progress2 $HOME/$FOLDER/ "$WORKINGDIRECTORY"/$(whoami)/$FOLDER
+            mkdir --parents "$WORKINGDIRECTORY"/$USERSNAME
 
-        echo "\"$FOLDER\" folder backing up script completed!"
-    done
+            for FOLDER in ${BACKUPFOLDERS[@]}
+            do
+                sudo rsync --archive --human-readable --info=progress2 /home/$USERSNAME/$FOLDER/ "$WORKINGDIRECTORY"/$USERSNAME/$FOLDER
 
-    echo "User folders backing up script completed!"
+                echo "\"$FOLDER\" folder backing up script completed!"
+            done
+        done
+    else
+        echo "Backing up $USERNAME's folders..."
+
+        mkdir --parents "$WORKINGDIRECTORY"/$USERNAME
+
+        for FOLDER in ${BACKUPFOLDERS[@]}
+        do
+            rsync --archive --human-readable --info=progress2 $HOME/$FOLDER/ "$WORKINGDIRECTORY"/$USERNAME/$FOLDER
+
+            echo "\"$FOLDER\" folder backing up script completed!"
+        done
+    fi
+
+    echo "Users' folders backing up script completed!"
 }
 
 

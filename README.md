@@ -23,20 +23,22 @@ Scripted (semi-automated) (re)installation of *Fedora Workstation*, including ex
 
   - Pre-installation
       - Configure *Kickstart* answer file
-      - Export system settings
-      - Export user(s) settings
+      - Export system's settings
+      - Export users' settings
+      - Export programs' settings
           - Back up Mozilla profiles
-      - Backup user(s)' folders
+      - Backup users' folders
   - Installation
       - *Kickstart* answer file
       - Install software from repositories
       - Install software from other sources
   - Post-installation
       - Set up system
-      - Set up user(s)
-          - Restore Mozilla profiles
+      - Set up users
           - Customise interface
-      - Restore user(s)' folders
+      - Set up programs 
+          - Restore Mozilla profiles
+      - Restore users' folders
   - Maintenance
       - Update
       - Clean up
@@ -80,7 +82,7 @@ Commits pushed under **major** number targeting a stable Fedora Workstation rele
 
 ### Releases
 
-To provide historical compatibility, the highest **minor** versions before **major** number increment are packed into releases.
+To provide historical compatibility, the highest **minor** versions before **major** number increment are tagged as releases.
 
 For the releases available, see the [tags](https://github.com/MislavVolaj/Scripts_SplendidInstallation-FedoraWorkstation/tags).
 
@@ -93,8 +95,7 @@ For the releases available, see the [tags](https://github.com/MislavVolaj/Script
 
 ### Release notes
 
-Version 33.1
-  - Initial commit
+For the changes in newer versions, see the [release notes](RELEASENOTES.md).
 
 ## License
 

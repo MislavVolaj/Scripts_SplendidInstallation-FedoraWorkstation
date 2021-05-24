@@ -22,6 +22,7 @@ Configure_DNF() {
         sudo sh -c "printf '%s\n' \
             '[main]' \
             'best=True' \
+            'tsflags=nodocs' \
             '' \
             'clean_requirements_on_remove=True' \
             'keepcache=False' \
@@ -113,9 +114,9 @@ Install_Repositories-Supplementary() {
 Install_SoftwareFromRepositories-Pre-selected() {
     echo "Installing pre-selected software from repositories..."
 
-    # Installing core system components
-    sudo dnf install --assumeyes akmods kernel-devel kernel-headers
-    sudo dnf install --assumeyes exfat-utils sysfsutils xfsprogs-xfs_scrub
+    # Installing core operating system components
+    sudo dnf install --assumeyes akmods kernel-devel kernel-headers tlp
+    sudo dnf install --assumeyes compsize exfat-utils smartmontools sysfsutils udisks2-btrfs xfsprogs-xfs_scrub
     sudo dnf install --assumeyes cabextract libzip lzip p7zip p7zip-plugins unrar
 
     # Installing Intel chipset drivers and components
@@ -124,6 +125,9 @@ Install_SoftwareFromRepositories-Pre-selected() {
 
     # Installing PulseAudio components
     sudo dnf install --assumeyes pulseeffects
+
+    # Install networking components
+    sudo dnf install --assumeyes gvfs-nfs
 
     # Installing GNOME desktop environment components
     sudo dnf install --assumeyes bijiben gnome-books gnome-documents gnome-music gnome-nettool gnome-sound-recorder gnome-todo gnome-tweak-tool gnome-usage
@@ -135,7 +139,6 @@ Install_SoftwareFromRepositories-Pre-selected() {
 
     # Installing productivity components
     sudo dnf install --assumeyes adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts bitmap-console-fonts bitmap-fixed-fonts bitmap-lucida-typewriter-fonts bitstream-vera-sans-fonts bitstream-vera-sans-mono-fonts bitstream-vera-serif-fonts comic-neue-angular-fonts comic-neue-fonts dejavu-lgc-sans-fonts dejavu-lgc-sans-mono-fonts dejavu-lgc-serif-fonts entypo-fonts fontawesome-fonts google-droid-sans-fonts google-droid-sans-mono-fonts google-droid-serif-fonts google-noto-emoji-fonts google-noto-sans-fonts google-noto-serif-fonts google-roboto-condensed-fonts google-roboto-fonts google-roboto-slab-fonts liberation-fonts liberation-narrow-fonts libreoffice-opensymbol-fonts linux-libertine-biolinum-fonts linux-libertine-fonts mozilla-fira-mono-fonts mozilla-fira-sans-fonts oldstandard-sfd-fonts open-sans-fonts oxygen-fonts urw-base35-fonts
-    sudo dnf install --assumeyes libreoffice-base libreoffice-draw libreoffice-math
     sudo dnf install --assumeyes scribus
     [[ -f /etc/yum.repos.d/vscode.repo ]] && sudo dnf install --assumeyes code
     sudo dnf install --assumeyes thunderbird transmission
@@ -143,6 +146,7 @@ Install_SoftwareFromRepositories-Pre-selected() {
     [[ -f /etc/yum.repos.d/teamviewer.repo ]] && sudo dnf install --assumeyes teamviewer
 
     # Installing multimedia components
+    sudo dnf install --assumeyes foliate
     sudo dnf install --assumeyes libopenraw-pixbuf-loader libwebp-tools xcf-pixbuf-loader webp-pixbuf-loader
     sudo dnf install --assumeyes darktable shotwell
     sudo dnf install --assumeyes gimp gimp-data-extras gimp-dbp gimp-dds-plugin gimp-elsamuko gimp-focusblur-plugin gimp-fourier-plugin gimp-heif-plugin gimp-help gimp-high-pass-filter gimp-layer-via-copy-cut gimp-lensfun gimp-resynthesizer gimp-lqr-plugin gimp-luminosity-masks gimp-paint-studio gimp-save-for-web gimp-separate+ gimp-wavelet-decompose gimp-wavelet-denoise-plugin gimpfx-foundry ufraw-gimp
@@ -159,10 +163,8 @@ Install_SoftwareFromRepositories-Pre-selected() {
 
     sudo dnf install --assumeyes x264 x265
     sudo dnf install --assumeyes vlc vlc-core vlc-extras
-    sudo dnf install --assumeyes lame ffmpeg
-    sudo dnf install --assumeyes handbrake handbrake-gui
+    sudo dnf install --assumeyes ffmpeg handbrake handbrake-gui lame soundconverter
     sudo dnf install --assumeyes flowblade
-    sudo dnf install --assumeyes soundconverter
     sudo dnf install --assumeyes picard
 
     # Installing gaming support components

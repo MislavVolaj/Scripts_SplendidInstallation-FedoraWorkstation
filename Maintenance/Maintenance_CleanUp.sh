@@ -7,7 +7,7 @@
 
 
 Cleanup_UpdateCache() {
-    echo "Deleting up update caches..."
+    echo "Deleting update caches..."
 
     # Clearing firmware update tool update cache and history
     sudo fwupdmgr clear-offline
@@ -16,42 +16,53 @@ Cleanup_UpdateCache() {
     # Clearing software packages update cache and history
     sudo dnf clean all
 
-    sudo rm -rf /var/lib/dnf/history/*
-    sudo rm -rf /var/lib/dnf/yumdb/*
-    sudo rm -rf /var/cache/PackageKit/*
+    sudo rm --recursive --force /var/lib/dnf/history/*
+    sudo rm --recursive --force /var/lib/dnf/yumdb/*
+    sudo rm --recursive --force /var/cache/PackageKit/*
 
-    echo "Update caches deletion script completed!"
+    echo "Update caches deleting script completed!"
+}
+
+Cleanup_PackagesDocumentation () {
+    echo "Deleting packages documentation..."
+
+    sudo rm --recursive --force /usr/share/doc/*
+
+    echo "Packages documentation deleting script completed!"
 }
 
 Cleanup_TemporaryFiles() {
+    read -p "Type the age of temporary files to keep: (to clear all temporary files type \"0\", to clear older temporary files than specified type a number followed by a suffix \"us\", \"ms\", \"s\", \"m\", \"h\", \"d\" or \"w\"): " TEMPORARYFILESRETENTIONTIME
     echo "Deleting temporary files..."
 
-    # Commenting out current temporary files retention time to preserve their values
+    # Commenting out current temporary files retention times to preserve their values
     sudo sed --in-place '/^q/ s/^q /# &/g' /usr/lib/tmpfiles.d/tmp.conf
 
-    # Writing shortest temporary files retention time
-    sudo sed --in-place '$ a q \/tmp 1777 root root 1s' /usr/lib/tmpfiles.d/tmp.conf
-    sudo sed --in-place '$ a q \/var\/tmp 1777 root root 1s' /usr/lib/tmpfiles.d/tmp.conf
+    # Writing specified temporary files retention times
+    sudo sed --in-place '$ a q \/tmp 1777 root root '$TEMPORARYFILESRETENTIONTIME'' /usr/lib/tmpfiles.d/tmp.conf
+    sudo sed --in-place '$ a q \/var\/tmp 1777 root root '$TEMPORARYFILESRETENTIONTIME'' /usr/lib/tmpfiles.d/tmp.conf
 
-    # Deleting temporary files older than their defined retention time
+    # Deleting temporary files older than their specified retention times
     sudo systemd-tmpfiles --remove
     sudo systemctl start systemd-tmpfiles-clean
 
-    # Deleting shortest temporary files retention time
-    sudo sed -i '/^q/d' /usr/lib/tmpfiles.d/tmp.conf
+    # Deleting specified temporary files retention times
+    sudo sed --in-place '/^q/d' /usr/lib/tmpfiles.d/tmp.conf
 
-    # Uncommenting original temporary files retention time
-    sudo sed -i '/# q /s/^# q /q /g' /usr/lib/tmpfiles.d/tmp.conf
+    # Uncommenting original temporary files retention times to restore their values
+    sudo sed --in-place '/# q /s/^# q /q /g' /usr/lib/tmpfiles.d/tmp.conf
 
-    echo "Temporary files deletion script completed!"
+    echo "Temporary files deleting script completed!"
 }
 
 Cleanup_Journal() {
+    read -p "Type the age of journal entries to keep: (to clear all journal entries type \"1s\", to clear older journal entries than specified type a number followed by a suffix \"s\", \"m\", \"h\", \"days\", \"weeks\", \"months\" or \"years\"): " LOGRETENTIONTIME
+
     echo "Clearing journal..."
 
     sudo journalctl --flush --quiet
     sudo journalctl --rotate --quiet
-    sudo journalctl --vacuum-time=1s --quiet
+    sudo journalctl --vacuum-time=$LOGRETENTIONTIME --quiet
 
     echo "Journal clearing script completed!"
 }
@@ -59,7 +70,7 @@ Cleanup_Journal() {
 Cleanup_TrimSSD() {
     echo "Trimming SSD..."
 
-    sudo fstrim --fstab
+    sudo fstrim --fstab --verbose
 
     echo "SSD trimming script completed!"
 }
@@ -67,7 +78,11 @@ Cleanup_TrimSSD() {
 Cleanup_TerminalHistory() {
     echo "Clearing Terminal history..."
 
-    rm /home/$(whoami)/.bash_history
+    if [[ -f $HOME/.bash_history ]]
+    then
+        rm $HOME/.bash_history
+    fi
+
     history -c
 
     echo "Terminal history clearing script completed!"
@@ -78,21 +93,25 @@ Cleanup_TerminalHistory() {
 Menu() {
     echo
 
-    PS3="Press 1 to exit, 2 to run all options or 3-7 to select an option to run: "
+    PS3="Press 1 to exit, 2 to run all options or 3-8 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Delete update cache" "Delete temporary files" "Clear journal" "Trim SSD" "Clear Terminal history"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Delete update cache" "Delete packages documentation" "Delete temporary files" "Clear journal" "Trim SSD" "Clear Terminal history"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
             "RUN ALL OPTIONS" )
                 Cleanup_UpdateCache
+                Cleanup_PackagesDocumentation
                 Cleanup_TemporaryFiles
                 Cleanup_Journal
                 Cleanup_TrimSSD
                 Cleanup_TerminalHistory
                 exit 0;;
-            "Cleanup update cache" )
+            "Delete update cache" )
                 Cleanup_UpdateCache
+                Menu;;
+            "Delete packages documentation" )
+                Cleanup_PackagesDocumentation
                 Menu;;
             "Delete temporary files" )
                 Cleanup_TemporaryFiles

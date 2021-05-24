@@ -1,0 +1,101 @@
+# "Splendid installation" scripts for Fedora Workstation
+
+### Release notes
+
+Changes in version 33.2:
+  - *README.md*
+      - Updates modules dissection
+      - Introduces *RELEASENOTES.md*
+  - *RELEASENOTES.md*
+      - Takes over *Release notes* from *README.md*
+  - *Pre-installation.sh*
+      - Introduces *Pre-installation_Export-ProgramSettings.sh*
+  - *Pre-installation_Configure-KickstartAnswerFile.sh*
+      - Checks for existence of a *Kickstart* answer file before allowing modifications to it
+  - *Pre-installation_Export-SystemSettings.sh*
+      - Sorts configuration files by type using optimised code
+      - Asks for a file name and notifies if overwriting when exporting user installed packages
+      - Introduces an option to export font rendering settings
+  - *Pre-installation_Export-UserSettings.sh*
+      - Exports passwordless *sudo* configuration
+  - *Pre-installation_Export-ProgramSettings.sh*
+      - Takes over exporting *PulseEffect* settings from *Pre-installation_Export-UserSettings.sh*
+      - Takes over calling *Pre-installation_BackUp-MozillaProfiles.sh* from *Pre-installation_Export-UserSettings.sh*
+      - Introduces options to export *Git* settings and *Subsurface* settings and database
+  - *Pre-installation_BackUp-UserFolders.sh*
+      - Asks to back up other users' folders
+  - *Settings_GNOME-Exported.dconf*
+      - Sets applications menu positions for *Discord* for both *RPM* and *Flatpak* packages
+      - Delegates setting desktop background and screensaver picures to *Post-installation_Customise-Interface.sh*
+      - Switches *Gedit* side panel from *Documents* to *File Browser*
+      - Sets *Logs* settings
+      - Switches setting font antialiasing from *grayscale* to *subpixel*
+  - *Configuration_Kickstart-FedoraWorkstation.cfg*
+      - Improves disk partitioning configurations comments
+      - Optimises *LVM* partition layout
+          - Does not enable *noexec* flag for */var* partition as that prevents Flatpak packaged software from running
+      - Optimises *Btrfs* file system and partition layout
+          - Switches to *space-cache* version 2
+          - Uses *ssd* option explicitly
+          - Does not partition */home* separately as there is an issue with recursively mounting restored subvolumes in such a layout
+      - Replaces deprecated command switch *--instLangs* with *--inst-langs*
+      - Excludes installing package documentation
+      - Excludes installing obscure hardware support
+      - Includes installing optional *LibreOffice* components
+  - *Installation_SoftwareInstallation.sh*
+      - Configures *dnf* to exclude installing package documentation
+      - Installs additional packages by default: *tlp*, *smartmontools*, *udisks2-btrfs*, *gvfs-nfs* and *foliate*
+      - Does not install *LibreOffice* components by default since those are now marked for installation in the Kickstart answer file
+  - *Installation_SoftwareInstallation-Supplementary.sh*
+      - Asks to install each program, so that *RUN ALL OPTIONS* can be chosen but individual options skipped
+      - Asks to install program from RPM Fusion or Flathub repository or local file, where applicable
+      - Introduces options to install *Discord* and *WebTorrent*
+  - *Configuration_Packages-UserInstalled-Pre-selected.list*
+      - Updates the list of packages to install from repositories in correlation with *Installation_SoftwareInstallation.sh*
+  - *SoftwareInstallation_Stremio.sh*
+      - Sorts menu options in an order logical for reinstallation of the program, as uninstalling the program requires compiled project
+  - *Script_Post-installation.sh*
+      - Deletes *Anaconda Installer* logs
+      - Introduces option to manage (list, add & delete) users
+      - Introduces *Post-installation_SetUp-Programs.sh*
+  - *Post-installation_SetUp-System.sh*
+      - Switches *zram* algorithm from *lzo-rle* to *zstd*
+      - Creates a configuration file to load *zstd* kernel module while booting, if *zstd* compression algorithm for *zram* was chosen
+      - Undoes changes when a different *zram* configuration method is chosen
+      - Checks for existence of */var* partition before allowing modifications to its mounting options
+      - Asks to disable possibly unnecessary services
+  - *Post-installation_SetUp-User.sh*
+      - Imports passwordess *sudo* cofiguration
+  - *Post-installation_SetUp-Programs.sh*
+      - Takes over importing *PulseEffect* settings from *Post-installation_SetUp-User.sh*
+      - Takes over calling *Post-installation_Restore-MozillaProfiles.sh* from *Post-installation_SetUp-User.sh*
+      - Introduces options to import *Git* settings or configure *Git* and import *Subsurface* settings and database
+  - *Post-installation_Restore-MozillaProfiles.sh*
+      - Checks for existence of a backup to restore from before starting the restoration process
+  - *Post-installation_Restore-UserFolders.sh*
+      - Asks to restore other users' folders
+  - *Post-installation_Customise-Interface.sh*
+      - Checks for existence of fonts archives before asking to start the installation process
+      - Introduces an option to import font rendering settings
+      - Introduces an option to restore default font selection
+      - Checks for existence of user icon before installing it
+      - Changes shell theme with interface theme change
+      - Does not unnecessarily apply *Nord* GNOME Terminal color scheme
+  - *Maintenance_CleanUp.sh*
+      - Uses human-readable command flags
+      - Introduces option to delete package documentation
+      - Asks for age (retention time) of temporary files and log files (journal entries) when deleting them
+      - Shows *trim* results
+      - Checks for existence of Terminal history file before deleting it
+  - *Maintenance_XFS-Manage.sh*
+      - Loops through *XFS* partitions (mount points)
+  - *Maintenance_Btrfs-Manage.sh*
+      - Loops thorugh *Btrfs* partitions (mount points)
+      - Introduces an option of standard and alternative *snapshotting* and *rolling back* (restoring) logic
+          - Standard *snapshotting* logic creates read-only snapshots of subvolumes in a flat layout and continues to use original subvolumes as default. Standard *rolling back* logic creates writeable snapshots of read-only snapshots of original subvolumes in a flat layout and switches to use them as default, with restart
+          - Alternative *snapshotting* logic creates writeable snapshots of subvolumes in a flat layout and switches to use them as default, with restart. Alternative *rolling back* logic switches to use original subvolumes as default, with restart
+      - Supports partition configurations with "/ (root)", "/boot" and "/home" on a combination of non-Btrfs and Btrfs file systems and subvolumes
+      - WARNING: *Snapshotting* and *rolling back* is supported only for one set of snapshots, making it required to delete all snapshots before taking new snapshots, in line with the *freezing system state* philosophy
+
+Version 33.1
+  - Initial commit

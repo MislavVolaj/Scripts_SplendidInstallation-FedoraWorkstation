@@ -3,7 +3,7 @@
 # "Splendid installation" scripts for Fedora Workstation
 # Copyright (C) 2021 Mislav Volaj
 
-# Scripts version = 33.1
+# Scripts version = 33.2
 
 
 

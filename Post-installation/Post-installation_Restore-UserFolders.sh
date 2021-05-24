@@ -7,16 +7,34 @@
 
 
 Restore_UserFolders() {
-    echo "Restoring user folders..."
+    read -p "Would you like to restore other users' folders too? (y/ anything else to n): "
 
-    for FOLDER in ${RESTOREFOLDERS[@]}
-    do
-        rsync --archive --human-readable --info=progress2 "$WORKINGDIRECTORY"/$(whoami)/$FOLDER/ $HOME/$FOLDER
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        for USERSNAME in $(cat /etc/passwd | grep "/home" | cut --delimiter=: --fields=1)
+        do
+            echo "Restoring $USERSNAME's folders..."
 
-        echo "\"$FOLDER\" folder restoring script completed!"
-    done
+            for FOLDER in ${RESTOREFOLDERS[@]}
+            do
+                sudo rsync --archive --human-readable --info=progress2 "$WORKINGDIRECTORY"/$USERSNAME/$FOLDER /home/$USERSNAME/$FOLDER/
 
-    echo "User folders backing up script completed!"
+                echo "\"$FOLDER\" folder restoring script completed!"
+            done
+        done
+    elif [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "Restoring $USERNAME's folders..."
+
+        for FOLDER in ${RESTOREFOLDERS[@]}
+        do
+            rsync --archive --human-readable --info=progress2 "$WORKINGDIRECTORY"/$USERNAME/$FOLDER/ $HOME/$FOLDER
+
+            echo "\"$FOLDER\" folder restoring script completed!"
+        done
+    fi
+
+    echo "Users' folders restoring script completed!"
 }
 
 Configure_UserFilesOwnership() {

@@ -27,6 +27,7 @@ entypo-fonts
 exfat-utils
 ffmpeg
 flowblade
+foliate
 fontawesome-fonts
 gedit-code-assistance
 gedit-color-schemes
@@ -94,6 +95,7 @@ gstreamer1-svt-av1
 gstreamer1-svt-hevc
 gstreamer1-svt-vp9
 gstreamer1-vaapi
+gvfs-nfs
 handbrake
 handbrake-gui
 inkscape
@@ -131,11 +133,14 @@ scribus
 seahorse
 seahorse-nautilus
 shotwell
+smartmontools
 soundconverter
 steam
 sysfsutils
 thunderbird
+tlp
 transmission
+udisks2-btrfs
 ufraw-gimp
 unrar
 urw-base35-fonts

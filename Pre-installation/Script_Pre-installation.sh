@@ -33,6 +33,15 @@ CallScript_Export-UserSettings() {
     echo "User settings exporting script completed!"
 }
 
+CallScript_Export-ProgramSettings() {
+    echo "Calling program settings exporting script..."
+
+    chmod +x "$WORKINGDIRECTORY"/Pre-installation_Export-ProgramSettings.sh
+    "$WORKINGDIRECTORY"/./Pre-installation_Export-ProgramSettings.sh
+
+    echo "Program settings exporting script completed!"
+}
+
 CallScript_BackUp-UserFolders() {
     echo "Calling user folders backing up script..."
 
@@ -47,9 +56,9 @@ CallScript_BackUp-UserFolders() {
 Menu() {
     echo
 
-    PS3="Press 1 to exit, 2 to run all options or 3-6 to select an option to run: "
+    PS3="Press 1 to exit, 2 to run all options or 3-7 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Configure Kickstart answer file" "Export system settings" "Export user settings" "Back up user folders"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Configure Kickstart answer file" "Export system settings" "Export user settings" "Export program settings" "Back up user folders"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
@@ -57,6 +66,7 @@ Menu() {
                 CallScript_Configure-KickstartAnswerFile
                 CallScript_Export-SystemSettings
                 CallScript_Export-UserSettings
+                CallScript_Export-ProgramSettings
                 CallScript_BackUp-UserFolders
                 exit 0;;
             "Configure Kickstart answer file" )
@@ -67,6 +77,9 @@ Menu() {
                 Menu;;
             "Export user settings" )
                 CallScript_Export-UserSettings
+                Menu;;
+            "Export program settings" )
+                CallScript_Export-ProgramSettings
                 Menu;;
             "Back up user folders" )
                 CallScript_BackUp-UserFolders

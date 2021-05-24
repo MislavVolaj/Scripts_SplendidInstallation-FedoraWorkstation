@@ -9,6 +9,27 @@
 Export_Settings-Shell() {
     echo "Exporting shell settings..."
 
+    # Exporting sudo settings
+    sudo sh -c 'WORKINGDIRECTORY="$(pwd)/Pre-installation/Settings/User"
+
+    if [[ -f /etc/sudoers.d/passwordlesssudo ]]
+    then
+        if [[ -f $WORKINGDIRECTORY/passwordlesssudo ]]
+        then
+            read -p "Would you like to overwrite last exported sudo setting? (y/ anything else to skip): "
+
+            if [[ $REPLY =~ ^[Yy]$ ]]
+            then
+                cp /etc/sudoers.d/passwordlesssudo $WORKINGDIRECTORY
+            else
+                echo "Exporting sudo settings skipped!"
+            fi
+        else
+            cp /etc/sudoers.d/passwordlesssudo $WORKINGDIRECTORY
+        fi
+    fi'
+
+    # Exporting shell settings
     if [[ -f $WORKINGDIRECTORY/.bashrc ]]
     then
         read -p "Would you like to overwrite last exported shell setting? (y/ anything else to skip): "
@@ -29,7 +50,7 @@ Export_Settings-Shell() {
 Export_Nautilus-Scripts() {
     echo "Exporting Nautilus scripts..."
 
-    for NAUTILUSSCRIPT in (ls $HOME/.local/share/nautilus/scripts/)
+    for NAUTILUSSCRIPT in $(ls $HOME/.local/share/nautilus/scripts/)
     do
         if [[ -f $WORKINGDIRECTORY/Nautilus/$NAUTILUSSCRIPT ]]
         then
@@ -86,7 +107,7 @@ Export_Settings-GNOME() {
 
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
-            GNOMESETTINGS="Settings-GNOME_Exported.gsettings"
+            GNOMESETTINGS="Settings_GNOME-Exported.gsettings"
         else
             read -p "Type the name (with extension) of the gsettings file to export GNOME settings to: " "GNOMESETTINGS"
         fi
@@ -115,43 +136,14 @@ Export_Settings-GNOME() {
     echo "GNOME settings exporting script completed!"
 }
 
-Export_Settings-PulseEffects() {
-    echo "Exporting PulseEffects settings..."
-
-    if [[ -f $WORKINGDIRECTORY/../../Backup/Backup_PulseEffectsSettings.tar.zst ]]
-    then
-        read -p "Would you like to overwrite last exported PulseEffects settings? (y/ anything else to skip): "
-
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-            tar --create --zstd --xattrs --file="$WORKINGDIRECTORY"/../../Backup/Backup_PulseEffectsSettings.tar.zst --directory $HOME/.config/PulseEffects/ .
-        else
-            echo "exporting PulseEffect settings skipped!"
-        fi
-    else
-        tar --create --zstd --xattrs --file="$WORKINGDIRECTORY"/../../Backup/Backup_PulseEffectsSettings.tar.zst --directory $HOME/.config/PulseEffects/ .
-    fi
-
-    echo "PulseEffects settings exporting script completed!"
-}
-
-CallScript_BackUp-MozillaProfiles() {
-    echo "Calling Mozilla profiles backing up script..."
-
-    chmod +x "$WORKINGDIRECTORY"/../../Pre-installation_BackUp-MozillaProfiles.sh
-    "$WORKINGDIRECTORY"/../.././Pre-installation_BackUp-MozillaProfiles.sh
-
-    echo "Mozilla profiles backing up script completed!"
-}
-
 
 
 Menu() {
     echo
 
-    PS3="Press 1 to exit, 2 to run all options or 3-7 to select an option to run: "
+    PS3="Press 1 to exit, 2 to run all options or 3-5 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Export shell settings" "Export scripts for Nautilus" "Export GNOME settings" "Export PulseEffects settings" "Back up Mozilla profiles"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Export shell settings" "Export scripts for Nautilus" "Export GNOME settings"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
@@ -159,8 +151,6 @@ Menu() {
                 Export_Settings-Shell
                 Export_Nautilus-Scripts
                 Export_Settings-GNOME
-                Export_Settings-PulseEffects
-                CallScript_BackUp-MozillaProfiles
                 exit 0;;
             "Export shell settings" )
                 Export_Settings-Shell
@@ -170,12 +160,6 @@ Menu() {
                 Menu;;
             "Export GNOME settings" )
                 Export_Settings-GNOME
-                Menu;;
-            "Export PulseEffects settings" )
-                Export_Settings-PulseEffects
-                Menu;;
-            "Back up Mozilla profiles" )
-                CallScript_BackUp-MozillaProfiles
                 Menu;;
         esac
     done

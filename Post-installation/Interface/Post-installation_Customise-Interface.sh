@@ -9,30 +9,36 @@
 Install_Fonts() {
     echo "Installing fonts..."
 
-    read -p "Would you like to install Google fonts? (y/ anything else to skip): "
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
+    if [[ -f "$WORKINGDIRECTORY"/Fonts/Fonts_Google.tar.zst ]]
     then
-        mkdir --parents "$HOME"/.local/share/fonts/Google
+        read -p "Would you like to install Google fonts? (y/ anything else to skip): "
 
-        tar --extract --zstd --file="$WORKINGDIRECTORY"/Fonts/Fonts_Google.tar.zst --directory "$HOME"/.local/share/fonts/Google/
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            mkdir --parents "$HOME"/.local/share/fonts/Google
 
-        echo "Google fonts installation script completed!"
-    else
-        echo "Installation of Google fonts skipped!"
+            tar --extract --zstd --file="$WORKINGDIRECTORY"/Fonts/Fonts_Google.tar.zst --directory "$HOME"/.local/share/fonts/Google/
+
+            echo "Google fonts installation script completed!"
+        else
+            echo "Installation of Google fonts skipped!"
+        fi
     fi
 
-    read -p "Would you like to install Microsoft fonts? (y/ anything else to skip): "
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
+    if [[ -f "$WORKINGDIRECTORY"/Fonts/Fonts_Microsoft.tar.zst ]]
     then
-        mkdir --parents "$HOME"/.local/share/fonts/Microsoft
+        read -p "Would you like to install Microsoft fonts? (y/ anything else to skip): "
 
-        tar --extract --zstd --file="$WORKINGDIRECTORY"/Fonts/Fonts_Microsoft.tar.zst --directory "$HOME"/.local/share/fonts/Microsoft/
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            mkdir --parents "$HOME"/.local/share/fonts/Microsoft
 
-        echo "Microsoft fonts installation script completed!"
-    else
-        echo "Installation of Microsoft fonts skipped!"
+            tar --extract --zstd --file="$WORKINGDIRECTORY"/Fonts/Fonts_Microsoft.tar.zst --directory "$HOME"/.local/share/fonts/Microsoft/
+
+            echo "Microsoft fonts installation script completed!"
+        else
+            echo "Installation of Microsoft fonts skipped!"
+        fi
     fi
 
     read -p "Would you like to install \"Better fonts\"? (y/ anything else to skip): "
@@ -65,15 +71,43 @@ Install_Fonts() {
 Configure_Fonts() {
     echo "Configuring fonts..."
 
-    read -p "Would you like to apply \"Roboto Light\" fonts? (y/ anything else to skip): "
+    read -p "Would you like to import font rendering settings? (y/ anything else to skip): "
 
     if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        if [[ -f "$SETTINGSDIRECTORY"/local.conf ]]
+        then
+            sudo cp "$SETTINGSDIRECTORY"/local.conf /etc/fonts/
+            
+            echo "Font rendering settings importing script completed!"
+        else
+            echo "Importing font rendering settings skipped because the configuration file is missing!"
+        fi
+    else
+        echo "Importing font rendering settings skipped!"
+    fi
+
+    read -p "Would you like to restore default \"Cantarell\" fonts or apply \"Roboto Light\" fonts? (c/r/ anything else to skip): "
+
+    if [[ $REPLY =~ ^[Cc]$ ]]
+    then
+        # Configuring system-wide fonts
+        gsettings set org.gnome.desktop.interface document-font-name 'Cantarell 11'
+        gsettings set org.gnome.desktop.interface font-name 'Cantarell Regular 11'
+        gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 10'
+        gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Cantarell Bold 11'
+
+        # Configuring applications' fonts
+        gsettings set org.gnome.Notes font 'Cantarell 14'
+
+        echo "\"Cantarell\" fonts restored!"
+    elif [[ $REPLY =~ ^[Rr]$ ]]
     then
         # Configuring system-wide fonts
         gsettings set org.gnome.desktop.interface document-font-name 'Roboto Light 10'
         gsettings set org.gnome.desktop.interface font-name 'Roboto Light 10'
         gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 10'
-        gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Roboto Light 10'
+        gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Roboto 10'
 
         # Configuring applications' fonts
         gsettings set org.gnome.Notes font 'Roboto 14'
@@ -89,10 +123,10 @@ Configure_Fonts() {
 Install_UserIcon() {
     echo "Installing user icon..."
 
-    # Importing user icon
-    sudo cp "$WORKINGDIRECTORY"/Icons/$(whoami).jpg /usr/share/pixmaps/faces/
+    # Installing user icon, if it exists
+    [[ -f "$WORKINGDIRECTORY"/Icons/$(whoami).jpg ]] && sudo cp "$WORKINGDIRECTORY"/Icons/$(whoami).jpg /usr/share/pixmaps/faces/
 
-    echo "User icon installation script completed!"
+    echo "User icon installing script completed!"
 }
 
 Install_DesktopBackgrounds() {
@@ -185,6 +219,7 @@ Install_InterfaceTheme-Nordic() {
         gsettings set org.gnome.desktop.interface gtk-theme "Nordic-standard-buttons"
         gsettings set org.gnome.desktop.interface icon-theme "Nordic"
         gsettings set org.gnome.desktop.wm.preferences theme "Nordic-standard-buttons"
+        gsettings set org.gnome.shell.extensions.user-theme name "Nordic-standard-buttons" 
 
         echo "Nordic interface theme applied!"
     elif [[ $REPLY =~ ^[Bb]$ ]]
@@ -192,26 +227,16 @@ Install_InterfaceTheme-Nordic() {
         gsettings set org.gnome.desktop.interface gtk-theme "Nordic-darker-standard-buttons"
         gsettings set org.gnome.desktop.interface icon-theme "Nordic-Darker"
         gsettings set org.gnome.desktop.wm.preferences theme "Nordic-darker-standard-buttons"
+        gsettings set org.gnome.shell.extensions.user-theme name "Nordic-darker-standard-buttons"
 
         echo "Nordic-darker interface theme applied!"
     else
         echo "Interface theme not changed!"
     fi
 
-    # Installing Nord GNOME Terminal profile
+    # Installing Nord GNOME Terminal profile and applying Nord GNOME Terminal color scheme
     chmod +x "$WORKINGDIRECTORY"/Themes/nord-gnome-terminal.sh
     "$WORKINGDIRECTORY"/Themes/./nord-gnome-terminal.sh
-
-    read -p "Would you like to apply \"Nord\" GNOME Terminal color scheme? (y/ anything else to skip): "
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        gsettings set org.gnome.Terminal.ProfilesList default 'eadd8594-289a-46a9-a72d-34a880ff8a31'
-
-        echo "\"Nord\" GNOME Terminal color scheme applied!"
-    else
-        echo "\"Nord\" GNOME Terminal color scheme not changed!"
-    fi
 
     # Importing Nord GNOME Text Editor color scheme
     mkdir --parents /home/$(whoami)/.local/share/gedit/styles
@@ -280,5 +305,6 @@ Menu() {
 
 COLUMNS=1
 WORKINGDIRECTORY="$(pwd)/Post-installation/Interface"
+SETTINGSDIRECTORY="$(pwd)/Pre-installation/Settings/System"
 
 Menu

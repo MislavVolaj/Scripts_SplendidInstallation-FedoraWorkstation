@@ -41,6 +41,16 @@ Configure_ZramSwap() {
 
     if [[ $REPLY =~ ^[Gg]$ ]]
     then
+        # Disabling udev rule zram generator configuration method, if it is in use
+        if [[ -f /etc/udev/rules.d/99-zram.rules ]]
+        then
+            # Removing zram swap space udev rule
+            sudo rm /etc/udev/rules.d/99-zram.rules
+
+            # Removing zram devices from file systems table, if udev rule zram generator configuration method was in use
+            sudo sed --in-place '/\/dev\/zram0*/d' /etc/fstab
+        fi
+
         # Importing zram swap space configuration or configuring zram swap space
         if [[ -f "$SETTINGSDIRECTORY"/zram-generator.conf ]]
         then
@@ -58,8 +68,18 @@ Configure_ZramSwap() {
                 'zram-fraction = $ZRAMFRACTION' > /etc/systemd/zram-generator.conf"
         fi
 
-        # Enabling zram-generator configuration method
-        sudo systemctl enable swap-create@zram0.service
+        # Creating a configuration file to load zstd kernel module while booting, if zstd compression algorithm was chosen
+        if [[ $(awk --field-separator=' *= *' '$1=="compression-algorithm" {print $2}' /etc/systemd/zram-generator.conf) = zstd ]]
+        then
+            sudo sh -c "printf '%s\n' \
+                'zstd' > /etc/modules-load.d/zstd.conf"
+        fi
+
+        # Enabling zram-generator configuration method, if udev rule zram configuration method was in use
+        if [[ $(systemctl is-active swap-create@zram0.service) = inactive ]]
+        then
+            sudo systemctl start swap-create@zram0.service
+        fi
 
         # Applying modified zram swap space configuration
         read -p "Would you like to apply modified zram swap space configuration immediately? (y/ anything else to skip): "
@@ -74,6 +94,13 @@ Configure_ZramSwap() {
         fi
     elif [[ $REPLY =~ ^[Uu]$ ]]
     then
+        # Stoping and disabling default zram-generator configuration method, if it is in use
+        if [[ $(systemctl is-active swap-create@zram0.service) = active ]]
+        then
+            sudo systemctl stop swap-create@zram0.service
+            sudo systemctl disable swap-create@zram0.service
+        fi
+
         # Creating a configuration file to load zram kernel module while booting
         sudo sh -c "printf '%s\n' \
             'zram' > /etc/modules-load.d/zram.conf"
@@ -99,16 +126,20 @@ Configure_ZramSwap() {
         sudo sh -c "printf '%s\n' \
             '/dev/zram0 none swap defaults 0 0' >> /etc/fstab"
 
-        # Disabling zram-generator configuration method
-        sudo systemclt disable swap-create@zram0.service
-
         echo "Modified zram swap space configuration will be applied while booting!"
     elif [[ $REPLY =~ ^[Cc]$ ]]
     then
-        # Configuring zram swap space
+        # Temporarily stopping default zram-generator configuration method, if it is in use
+        if [[ $(systemctl is-active swap-create@zram0.service) = active ]]
+        then
+            sudo systemctl stop swap-create@zram0.service
+        fi
+
+        # Configuring temporary zram swap space
         read -p "Type a compression algorithm to be used by zram: (lzo, lzo-rle, lz4, lz4hc, zstd) (default: lzo-rle): " ZRAMALGORITHM
         read -p "Type an ammount of RAM to be used by zram: (default: 4096): " ZRAMSIZE
 
+        # Creating temporary zram swap space
         sudo zramctl --algorithm $ZRAMALGORITHM --size "$ZRAMSIZE"MiB zram0
 
         echo "Temporary modified zram swap space configuration immediate application script completed!"
@@ -148,50 +179,53 @@ Configure_Hibernation() {
 Configure_FileSystems() {
     echo "Configuring file systems..."
 
-    # Configuring mounting /var partition with restrictions
-    read -p "Would you like to mount \"/var\" partition with restrictions? (y/ anything else to skip): "
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
+    if [[ $(findmnt /var) ]]
     then
-        read -p "Will you be using Flatpak containerised software? (y/n) (default: y): "
+        # Configuring mounting /var partition with restrictions
+        read -p "Would you like to mount \"/var\" partition with restrictions? (y/ anything else to skip): "
 
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
-            sudo sed --in-place '/\/var/ s/noatime/noatime,nodev,nosuid/' /etc/fstab
-
-            echo "Configuring \"/var\" partition with \"nodev\" and \"nosuid\" restrictions script completed!"
-
-            # Remounting /var partition with restrictions
-            read -p "Would you like to remount \"/var\" partition with restrictions immediately? (y/ anything else to skip): "
+            read -p "Will you be using Flatpak containerised software? (y/n) (default: y): "
 
             if [[ $REPLY =~ ^[Yy]$ ]]
             then
-                sudo mount -o remount,nodev,nosuid /var
+                sudo sed --in-place '/\/var/ s/noatime/noatime,nodev,nosuid/' /etc/fstab
 
-                echo "Remounted \"/var\" partition with restrictions!"
-            else
-                echo "\"/var\" partition will be remounted with restrictions while rebooting!"
-            fi
-        elif [[ $REPLY =~ ^[Nn]$ ]]
-        then
-            sudo sed --in-place '/\/var/ s/noatime/noatime,nodev,noexec,nosuid/' /etc/fstab
+                echo "Configuring \"/var\" partition with \"nodev\" and \"nosuid\" restrictions script completed!"
 
-            echo "Configuring \"/var\" partition with \"nodev\", \"noexec\" and \"nosuid\" restrictions script completed!"
+                # Remounting /var partition with restrictions
+                read -p "Would you like to remount \"/var\" partition with restrictions immediately? (y/ anything else to skip): "
 
-            # Remounting /var partition with restrictions
-            read -p "Would you like to remount \"/var\" partition with restrictions immediately? (y/ anything else to skip): "
+                if [[ $REPLY =~ ^[Yy]$ ]]
+                then
+                    sudo mount -o remount,nodev,nosuid /var
 
-            if [[ $REPLY =~ ^[Yy]$ ]]
+                    echo "Remounted \"/var\" partition with restrictions!"
+                else
+                    echo "\"/var\" partition will be remounted with restrictions while rebooting!"
+                fi
+            elif [[ $REPLY =~ ^[Nn]$ ]]
             then
-                sudo mount -o remount,nodev,noexec,nosuid /var
+                sudo sed --in-place '/\/var/ s/noatime/noatime,nodev,noexec,nosuid/' /etc/fstab
 
-                echo "Remounted \"/var\" partition with restrictions!"
-            else
-                echo "\"/var\" partition will be remounted with restrictions while rebooting!"
+                echo "Configuring \"/var\" partition with \"nodev\", \"noexec\" and \"nosuid\" restrictions script completed!"
+
+                # Remounting /var partition with restrictions
+                read -p "Would you like to remount \"/var\" partition with restrictions immediately? (y/ anything else to skip): "
+
+                if [[ $REPLY =~ ^[Yy]$ ]]
+                then
+                    sudo mount -o remount,nodev,noexec,nosuid /var
+
+                    echo "Remounted \"/var\" partition with restrictions!"
+                else
+                    echo "\"/var\" partition will be remounted with restrictions while rebooting!"
+                fi
             fi
+        else
+            echo "Mounting \"/var\" partition with restrictions skipped!"
         fi
-    else
-        echo "Mounting \"/var\" partition with restrictions skipped!"
     fi
 
     # Manually modifying file systems table
@@ -269,14 +303,30 @@ Configure_Networking() {
 Configure_Services() {
     echo "Configuring services..."
 
+    # Disabling unnecessary services
+    DISABLESERVICES=(fwupd iscsi-shutdown lvm2-monitor ModemManager switcheroo-control teamviewerd)
+    
+    for SERVICE in ${DISABLESERVICES[@]}
+    do
+        read -p "Would you like to disable \"$SERVICE\" service? (y/ anything else to n): "
+        
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            if [[ $(systemctl is-enabled $SERVICE) = enabled ]]
+            then
+                sudo systemctl disable $SERVICE
+            fi
+        fi
+    done
+
     # Importing logging history retention configuration or configuring logging history retention time
     if [[ -f "$SETTINGSDIRECTORY"/journald.conf ]]
     then
         sudo cp "$SETTINGSDIRECTORY"/journald.conf /etc/systemd/
     else
-        read -p "Type the number of days to retain logging history: " LOGTIME
+        read -p "Type the number of days to retain logging history: " LOGRETENTIONTIME
 
-        sudo sed --in-place 's/#MaxRetentionSec=/MaxRetentionSec='$LOGTIME'day/' /etc/systemd/journald.conf
+        sudo sed --in-place 's/#MaxRetentionSec=/MaxRetentionSec='$LOGRETENTIONTIME'day/' /etc/systemd/journald.conf
     fi
 
     # Importing temporary files retention configuration or configuring temporary files retention time
@@ -284,10 +334,10 @@ Configure_Services() {
     then
         sudo cp "$SETTINGSDIRECTORY"/tmp.conf /usr/lib/tmpfiles.d/
     else
-        read -p "Type the number of days to retain temporary files: " TEMPORARYFILESTIME
+        read -p "Type the number of days to retain temporary files: " TEMPORARYFILESRETENTIONTIME
 
-        sudo sed --in-place 's/tmp 1777 root root .*/tmp 1777 root root '$TEMPORARYFILESTIME'd/' /usr/lib/tmpfiles.d/tmp.conf
-        sudo sed --in-place 's/\/var\/tmp 1777 root root .*/\/var\/tmp 1777 root root '$TEMPORARYFILESTIME'd/' /usr/lib/tmpfiles.d/tmp.conf
+        sudo sed --in-place 's/tmp 1777 root root .*/tmp 1777 root root '$TEMPORARYFILESRETENTIONTIME'd/' /usr/lib/tmpfiles.d/tmp.conf
+        sudo sed --in-place 's/\/var\/tmp 1777 root root .*/\/var\/tmp 1777 root root '$TEMPORARYFILESRETENTIONTIME'd/' /usr/lib/tmpfiles.d/tmp.conf
     fi
 
     echo "Services configuration script completed!"

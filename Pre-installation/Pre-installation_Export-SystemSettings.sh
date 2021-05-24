@@ -14,20 +14,14 @@ Export_Settings() {
         if [[ -f $SETTING ]]
         then
             # Sort configuration file by type
-            if [[ $SETTING =~ \.conf$ ]]
-            then
-                SETTINGSDIRECTORY="$WORKINGDIRECTORY"
-            elif [[ $SETTING =~ \.rules$ ]]
-            then
-                SETTINGSDIRECTORY="$WORKINGDIRECTORY"
-            elif [[ $SETTING =~ \.thumbnailer$ ]]
+            if [[ $SETTING =~ \.thumbnailer$ ]]
             then
                 SETTINGSDIRECTORY="$WORKINGDIRECTORY/Nautilus"
             elif [[ $SETTING =~ \.repo$ ]]
             then
                 SETTINGSDIRECTORY="$(pwd)/Installation/Software/Repositories"
             else
-                echo "Exporting setting \"$(basename $SETTING)\" skipped because it is not an expected configuration file type!"
+                SETTINGSDIRECTORY="$WORKINGDIRECTORY"
             fi
 
             # Export configuration file
@@ -53,11 +47,39 @@ Export_Settings() {
 }
 
 Export_DNF-UserInstalledPackagesList() {
-    echo "Exporting user-installed packages..."
+    read -p "Would you like to export user installed packages to a pre-selected file? (y/ anything else to select a file): "
 
-    dnf repoquery --userinstalled --queryformat "%{name}" > "$(pwd)/Installation/Software/Configuration_Packages-UserInstalled.list"
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        USERINSTALLEDPACKAGESLIST="Configuration_Packages-UserInstalled.list"
+    else
+        read -p "Type the name (with extension) of the file to export user installed packages to: " "USERINSTALLEDPACKAGESLIST"
+    fi
 
-    echo "User-installed packages exporting script completed!"
+    SETTINGSDIRECTORY="$(pwd)/Installation/Software"
+
+    if [[ -f "$SETTINGSDIRECTORY/$USERINSTALLEDPACKAGESLIST" ]]
+    then
+        read -p "Would you like to overwrite last exported user installed packages? (y/n/ anything else to skip): "
+
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            echo "Exporting user installed packages..."
+
+            dnf repoquery --userinstalled --queryformat "%{name}" > "$SETTINGSDIRECTORY/$USERINSTALLEDPACKAGESLIST"
+        elif [[ $REPLY =~ ^[Nn]$ ]]
+        then
+            Export_DNF-UserInstalledPackagesList
+        else
+            echo "Exporting user installed packages skipped!"
+        fi
+    else
+        echo "Exporting user installed packages..."
+
+        dnf repoquery --userinstalled --queryformat "%{name}" > "$SETTINGSDIRECTORY/$USERINSTALLEDPACKAGESLIST"
+    fi
+
+    echo "User installed packages exporting script completed!"
 }
 
 
@@ -65,9 +87,9 @@ Export_DNF-UserInstalledPackagesList() {
 Menu() {
     echo
 
-    PS3="Press 1 to exit, 2 to run all options or 3-12 to select an option to run: "
+    PS3="Press 1 to exit, 2 to run all options or 3-13 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Export Kernel modules settings" "Export zram swap space settings" "Export hibernation settings" "Export file systems settings" "Export Domain Name System settings" "Export logging history and temporary files retention settings" "Export Nautilus thumbnailers" "Export DNF package manager settings" "Export repositories" "Export user installed packages list"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Export Kernel modules settings" "Export zram swap space settings" "Export hibernation settings" "Export file systems settings" "Export Domain Name System settings" "Export logging history and temporary files retention settings" "Export Nautilus thumbnailers" "Export font rendering settings" "Export DNF package manager settings" "Export repositories" "Export user installed packages list"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
@@ -92,6 +114,9 @@ Menu() {
                 Export_Settings
                 SETTINGNAME="Nautilus thumbnailers"
                 SETTINGS=(/usr/share/thumbnailers/webp.thumbnailer)
+                Export_Settings
+                SETTINGNAME="font rendering settings"
+                SETTINGS=(/etc/fonts/local.conf)
                 Export_Settings
                 SETTINGNAME="DNF package manager settings"
                 SETTINGS=(/etc/dnf/dnf.conf)
@@ -134,6 +159,11 @@ Menu() {
             "Export Nautilus thumbnailers" )
                 SETTINGNAME="Nautilus thumbnailers"
                 SETTINGS=(/usr/share/thumbnailers/webp.thumbnailer)
+                Export_Settings
+                Menu;;
+            "Export font rendering settings" )
+                SETTINGNAME="font rendering settings"
+                SETTINGS=(/etc/fonts/local.conf)
                 Export_Settings
                 Menu;;
             "Export DNF package manager settings" )

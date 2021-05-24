@@ -9,6 +9,21 @@
 Configure_Settings-Shell() {
     echo "Configuring shell settings..."
 
+    # Importing or configuring sudo settings
+    if [[ -f "$SETTINGSDIRECTORY"/passwordlesssudo ]]
+    then
+        sudo cp "$SETTINGSDIRECTORY"/passwordlesssudo /etc/sudoers.d/
+    else
+        read -p "Would you like to disable a password for \"sudo\" command for users in \"wheel\" (system administrators) group? (y/ anything else to skip): "
+
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            sudo sh -c "printf '%s\n' \
+                '# Do not require a password for sudo command for users in wheel (system administrators) group' \
+                '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/passwordlesssudo"
+        fi
+    fi
+
     # Importing or configuring shell settings
     if [[ -f "$SETTINGSDIRECTORY"/.bashrc ]]
     then
@@ -49,7 +64,7 @@ Configure_Settings-Shell() {
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
             sh -c "printf '%s\n' \
-                'md() { [ \$# = 1 ] && mkdir --parents \"\$@\" && cd \"\$@\" || echo \"Error: No directory name passed!\"; }' \
+                'md() { [ \$# = 1 ] && mkdir --parents \"\$@\" && cd \"\$@\" || echo \"Error: No directory name passed\!\"; }' \
                 '' \
                 'alias cp='\''cp -i'\''' \
                 'alias mv='\''mv -i'\''' \
@@ -124,54 +139,6 @@ Import_Settings-GNOME() {
     echo "GNOME settings importing script completed!"
 }
 
-Install_Settings-PulseEffects() {
-    echo "Importing PulseEffects settings..."
-
-    # Restoring or installing PulseEffects settings
-    if [[ -f "$SETTINGSDIRECTORY"/../../Backup/Backup_PulseEffectsSettings.tar.zst ]]
-    then
-    	# Creating PulseEffects settings directory
-    	mkdir --parents $HOME/.config/PulseEffects
-
-    	# Extracting backed up PulseEffects settings
-        tar --extract --zstd --xattrs --file="$SETTINGSDIRECTORY"/../../Backup/Backup_PulseEffectsSettings.tar.zst --directory $HOME/.config/PulseEffects/
-    else
-        # Importing PulseEffects Impulse Response profiles
-        cp --recursive "$SETTINGSDIRECTORY"/PulseEffects/irs $HOME/.config/PulseEffects/
-
-        # Importing PulseEffects presets
-        cp --recursive "$SETTINGSDIRECTORY"/PulseEffects/output $HOME/.config/PulseEffects/
-    fi
-
-    # Configuring default Impulse Response profile path in PulseEffects presets
-    read -p "Would you like to configure a PulseEffects Impulse Response profile to use as default in PulseEffects presets? (y/ anything else to skip): "
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        read -p "Paste the name (with extension) of PulseEffects Impulse Response profile to use as default in PulseEffects presets: " "IRSPROFILE"
-
-        PRESETS=$HOME/.config/PulseEffects/output/*
-
-        for PRESET in $PRESETS
-        do
-            sed --in-place '/"kernel-path":.*/ s|"kernel-path":.*|"kernel-path": "/home/'$USERNAME'/.config/PulseEffects/irs/'"$IRSPROFILE"'",|' "$PRESET"
-        done
-    else
-        echo "Configuring a PulseEffects Impulse Response profile to use as default in PulseEffects presets skipped!"
-    fi
-
-    echo "PulseEffects settings importing script completed!"
-}
-
-CallScript_Restore-MozillaProfiles() {
-    echo "Calling restoration of Mozilla profiles script..."
-
-    chmod +x "$WORKINGDIRECTORY"/Post-installation_Restore-MozillaProfiles.sh
-    "$WORKINGDIRECTORY"/./Post-installation_Restore-MozillaProfiles.sh
-
-    echo "Restoration of Mozilla profiles script completed!"
-}
-
 CallScript_Customise-Interface() {
     echo "Installing interface customisation script..."
 
@@ -186,9 +153,9 @@ CallScript_Customise-Interface() {
 Menu() {
     echo
 
-    PS3="Press 1 to exit, 2 to run all options or 3-8 to select an option to run: "
+    PS3="Press 1 to exit, 2 to run all options or 3-6 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Configure shell settings" "Import scripts for Nautilus" "Import GNOME settings" "Import PulseEffects settings" "Restore Mozilla profiles" "Customise interface"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Configure shell settings" "Import scripts for Nautilus" "Import GNOME settings" "Customise interface"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
@@ -196,8 +163,6 @@ Menu() {
                 Configure_Settings-Shell
                 Import_Nautilus-Scripts
                 Import_Settings-GNOME
-                Install_Settings-PulseEffects
-                CallScript_Restore-MozillaProfiles
                 CallScript_Customise-Interface
                 exit 0;;
             "Configure shell settings" )
@@ -208,12 +173,6 @@ Menu() {
                 Menu;;
             "Import GNOME settings" )
                 Import_Settings-GNOME
-                Menu;;
-            "Import PulseEffects settings" )
-                Install_Settings-PulseEffects
-                Menu;;
-            "Restore Mozilla profiles" )
-                CallScript_Restore-MozillaProfiles
                 Menu;;
             "Customise interface" )
                 CallScript_Customise-Interface
