@@ -2,9 +2,14 @@
 # Copyright (C) 2021 Mislav Volaj
 # Read full copyright notices by viewing the source code of the main menu script or by running it
 #
-# Here follows a list of user-defined packages to install from supplementary repositories
+# Here follows a list of user pre-defined packages to install from Fedora and RPM Fusion repositories
 # Commented out packages are skipped during installation
 #
-code
-skypeforlinux
-teamviewer
+# bluefish
+darktable
+# flowblade
+foliate
+inkscape
+# krita
+# picard
+scribus

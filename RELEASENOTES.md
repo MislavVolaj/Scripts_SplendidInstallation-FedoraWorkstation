@@ -2,6 +2,49 @@
 
 ### Release notes
 
+Changes in version 33.3:
+  - *README.md*
+      - Updates modules dissection
+  - *Pre-installation_Export-ProgramSettings.sh*
+      - Unifies profiles backing up function
+      - Takes over backing up *Mozilla Firefox* and *Mozilla Thunderbird* profiles and deprecates *Pre-installation_BackUp-MozillaProfiles.sh*
+      - Introduces backing up *LibreOffice* profiles, *Transmission* settings and *VLC media player* settings
+  - *Pre-installation_Export-UserSettings.sh*
+      - Exports only changed gsettings key values
+  - *Settings_GNOME-Exported.dconf*
+      - Sets active *PulseEffects* preset
+      - Sets applications menu positions for *Signal*, *Telegram*, *Discord*, *Darktable* and *GIMP* for both *RPM* and *Flatpak* packages 
+      - Deprecates setting protected keys for *login screen* settings
+      - Sets *Caffeine* and *Netspeed* shell extensions settings
+  - *Configuration_Kickstart-FedoraWorkstation.cfg*
+      - Introduces unencrypted Btrfs disk partitioning configuration
+  - *Installation_SoftwareInstallation.sh*
+      - Asks to install GNOME Shell extensions
+      - Takes over installing *Discord* from *Installation_SoftwareInstallation-Supplementary.sh*
+      - Delegates installing *Foliate*, *Scribus*, *Darktable* and *Inkscape* to *Configuration_Packages-UserInstalled.list*
+  - *Installation_SoftwareInstallation-Supplementary.sh*
+      - Takes over installing *Microsoft Visual Studio Code*, *Skype* and *TeamViewer* and respective supplementary repositories from *Installation_SoftwareInstallation.sh*
+  - *Configuration_Packages-UserInstalled-Pre-selected.list*, *Configuration_Packages-UserInstalled.list* & *Configuration_Packages-UserInstalled-Custom.list*
+      - Reorganizes lists of packages to install from repositories in correlation with functions in *Installation_SoftwareInstallation.sh* and *Installation_SoftwareInstallation-Supplementary.sh*
+  - *Post-installation_SetUp-System.sh*
+      - Takes over disabling services *bluetooth.service* and *cups.service* from *Configuration_Kickstart-FedoraWorkstation.cfg*
+      - Asks to disable services *dnf-make-cache.timer* and *NetworkManager-wait-online.service*
+  - *Post-installation-SetUp-Programs.sh*
+      - Unifies profiles restoring function
+      - Takes over restoring *Mozilla Firefox* and *Mozilla Thunderbird* profiles and deprecates *Post-installation_Restore-MozillaProfiles.sh*
+      - Introduces restoring *LibreOffice* profiles, *Transmission* settings and *VLC media player* settings
+  - *Script_Maintenance.sh*
+      - Introduces *Maintenance_Upgrade.sh* and *Maintenance_Manage-FileSystems.sh*
+  - *Maintenance_Upgrade.sh*
+      - Upgrades *Fedora* to a higher release number using *python3-dnf-plugin-system-upgrade* plug-in
+      - Cleans up after upgrading *Fedora*
+  - *Maintenance-Manage-FileSystems.sh*
+      - Introduces *Manage_FileSystems-EXT4.sh*
+      - Takes over calling renamed *Manage_FileSystems-XFS.sh* and *Manage_FileSystems-Btrfs.sh* from *Script_Maintenance.sh*
+  - *Manage_FileSystems-EXT4.sh*
+      - Repairs *EXT4* file systems using *e2fsck*
+      - Defragments *EXT4* file systems using *e4defrag*
+
 Changes in version 33.2:
   - *README.md*
       - Updates modules dissection

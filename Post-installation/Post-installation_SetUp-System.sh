@@ -304,7 +304,7 @@ Configure_Services() {
     echo "Configuring services..."
 
     # Disabling unnecessary services
-    DISABLESERVICES=(fwupd iscsi-shutdown lvm2-monitor ModemManager switcheroo-control teamviewerd)
+    DISABLESERVICES=(bluetooth cups dnf-make-cache.timer fwupd iscsi-shutdown lvm2-monitor ModemManager NetworkManager-wait-online switcheroo-control teamviewerd)
     
     for SERVICE in ${DISABLESERVICES[@]}
     do

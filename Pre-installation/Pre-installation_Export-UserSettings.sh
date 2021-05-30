@@ -86,7 +86,7 @@ Export_Settings-GNOME() {
 
         if [[ -f "$WORKINGDIRECTORY/$GNOMESETTINGS" ]]
         then
-            read -p "Would you like to overwrite last exported GNOME settings? (y/ anything else to select a settings management tool): "
+            read -p "Would you like to overwrite last exported dconf GNOME settings? (y/ anything else to select a settings management tool): "
 
             if [[ $REPLY =~ ^[Yy]$ ]]
             then
@@ -112,22 +112,36 @@ Export_Settings-GNOME() {
             read -p "Type the name (with extension) of the gsettings file to export GNOME settings to: " "GNOMESETTINGS"
         fi
 
+        # Defining temporary settings lists
+        GSETTINGSLISTDEFAULTSETTINGS="/tmp/Settings_GNOME-Default.gsettings"
+        GSETTINGSLISTCUSTOMISEDSETTINGS="/tmp/Settings_GNOME-Customised.gsettings"
+
         if [[ -f "$WORKINGDIRECTORY/$GNOMESETTINGS" ]]
         then
-            read -p "Would you like to overwrite last exported GNOME settings? (y/ anything else to select a settings management tool): "
+            read -p "Would you like to overwrite last exported gsettings GNOME settings? (y/ anything else to select a settings management tool): "
 
             if [[ $REPLY =~ ^[Yy]$ ]]
             then
                 echo "Exporting GNOME settings..."
 
-                gsettings list-recursively > "$WORKINGDIRECTORY"/"$GNOMESETTINGS"
+                # Exporting and sorting default and customised gsettings
+                XDG_CONFIG_HOME=/tmp/ gsettings list-recursively | sort > $GSETTINGSLISTDEFAULTSETTINGS
+                gsettings list-recursively | sort > $GSETTINGSLISTCUSTOMISEDSETTINGS
+
+                # Comparing default and customised gsettings and extracting only changed gsettings
+                diff $GSETTINGSLISTDEFAULTSETTINGS $GSETTINGSLISTCUSTOMISEDSETTINGS | grep --only-matching --perl-regexp '> \K.*' > "$WORKINGDIRECTORY"/"$GNOMESETTINGS"
             else
                 Export_Settings-GNOME
             fi
         else
             echo "Exporting GNOME settings..."
 
-            gsettings list-recursively > "$WORKINGDIRECTORY"/"$GNOMESETTINGS"
+            # Exporting and sorting default and customised gsettings
+            XDG_CONFIG_HOME=/tmp/ gsettings list-recursively | sort > $GSETTINGSLISTDEFAULTSETTINGS
+            gsettings list-recursively | sort > $GSETTINGSLISTCUSTOMISEDSETTINGS
+
+            # Comparing default and customised gsettings and extracting only changed gsettings
+            diff $GSETTINGSLISTDEFAULTSETTINGS $GSETTINGSLISTCUSTOMISEDSETTINGS | grep --only-matching --perl-regexp '> \K.*' > "$WORKINGDIRECTORY"/"$GNOMESETTINGS"
         fi
     else
         echo "Exporting GNOME settings skipped!"

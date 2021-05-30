@@ -15,6 +15,15 @@ CallScript_Update() {
     echo "Software updating script completed!"
 }
 
+CallScript_Upgrade() {
+    echo "Calling system upgrading script..."
+
+    chmod +x "$WORKINGDIRECTORY"/Maintenance_Upgrade.sh
+    "$WORKINGDIRECTORY"/./Maintenance_Upgrade.sh
+
+    echo "System upgrading script completed!"
+}
+
 CallScript_CleanUp() {
     echo "Calling cleaning up script..."
 
@@ -24,22 +33,13 @@ CallScript_CleanUp() {
     echo "Cleaning up script completed!"
 }
 
-CallScript_XFS-Manage() {
+CallScript_Manage-FileSystems() {
     echo "Calling XFS managing script..."
 
-    chmod +x "$WORKINGDIRECTORY"/Maintenance_XFS-Manage.sh
-    "$WORKINGDIRECTORY"/./Maintenance_XFS-Manage.sh
+    chmod +x "$WORKINGDIRECTORY"/Maintenance_Manage-FileSystems.sh
+    "$WORKINGDIRECTORY"/./Maintenance_Manage-FileSystems.sh
 
     echo "XFS managing script completed!"
-}
-
-CallScript_Btrfs-Manage() {
-    echo "Calling Btrfs managing script..."
-
-    chmod +x "$WORKINGDIRECTORY"/Maintenance_Btrfs-Manage.sh
-    "$WORKINGDIRECTORY"/./Maintenance_Btrfs-Manage.sh
-
-    echo "Btrfs managing script completed!"
 }
 
 
@@ -49,27 +49,27 @@ Menu() {
 
     PS3="Press 1 to exit, 2 to run all options or 3-6 to select an option to run: "
 
-    select options in "EXIT" "RUN ALL OPTIONS" "Update" "Clean up" "Manage XFS" "Manage Btrfs"; do
+    select options in "EXIT" "RUN ALL OPTIONS" "Update" "Upgrade" "Clean up" "Manage file systems"; do
         case "$options" in
             "EXIT" )
                 exit 0;;
             "RUN ALL OPTIONS" )
                 CallScript_Update
+                CallScript_Upgrade
                 CallScript_CleanUp
-                CallScript_XFS-Manage
-                CallScript_Btrfs-Manage
+                CallScript_Manage-FileSystems
                 exit 0;;
             "Update" )
                 CallScript_Update
                 Menu;;
+            "Upgrade" )
+                CallScript_Upgrade
+                Menu;;
             "Clean up" )
                 CallScript_CleanUp
                 Menu;;
-            "Manage XFS" )
-                CallScript_XFS-Manage
-                Menu;;
-            "Manage Btrfs" )
-                CallScript_Btrfs-Manage
+            "Manage file systems" )
+                CallScript_Manage-FileSystems
                 Menu;;
         esac
     done

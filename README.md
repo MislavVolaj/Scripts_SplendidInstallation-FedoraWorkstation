@@ -26,7 +26,6 @@ Scripted (semi-automated) (re)installation of *Fedora Workstation*, including ex
       - Export system's settings
       - Export users' settings
       - Export programs' settings
-          - Back up Mozilla profiles
       - Backup users' folders
   - Installation
       - *Kickstart* answer file
@@ -36,14 +35,16 @@ Scripted (semi-automated) (re)installation of *Fedora Workstation*, including ex
       - Set up system
       - Set up users
           - Customise interface
-      - Set up programs 
-          - Restore Mozilla profiles
+      - Set up programs
       - Restore users' folders
   - Maintenance
       - Update
+      - Upgrade
       - Clean up
-      - Manage XFS
-      - Manage Btrfs
+      - Manage file systems
+          - Manage Ext4
+          - Manage XFS
+          - Manage Btrfs
 
 ## Usage instructions
 

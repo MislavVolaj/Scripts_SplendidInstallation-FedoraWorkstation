@@ -93,7 +93,7 @@ Import_Nautilus-Scripts() {
 }
 
 Import_Settings-GNOME() {
-    read -p "Select a settings management tool to use to import GNOME settings: dconf, gsettings: (d/g/ anything else to skip): "
+    read -p "Select a settings management tool to use to import GNOME settings: dconf / gsettings: (d/g/ anything else to skip): "
 
     if [[ $REPLY =~ ^[Dd]$ ]]
     then
@@ -129,7 +129,7 @@ Import_Settings-GNOME() {
             if [ $? -ne 0 ]
             then
                 echo "Could not import a \"$TEXTLINE\" setting!"
-                read -n 1 -s -r -p "Press any key to continue"
+                read -n 1 -p -r -s "Press any key to continue"
             fi
         done < "$SETTINGSDIRECTORY"/"$GNOMESETTINGS"
     else

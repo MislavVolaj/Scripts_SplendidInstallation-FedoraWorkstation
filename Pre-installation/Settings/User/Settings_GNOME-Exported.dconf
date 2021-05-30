@@ -2,6 +2,10 @@
 item-filter='any'
 keyrings-selected=['secret-service:///org/freedesktop/secrets/collection/login']
 
+[com/github/wwmm/pulseeffects]
+last-used-input-preset='Perfect EQ'
+last-used-output-preset='Perfect EQ'
+
 [org/fedorahosted/background-logo-extension]
 logo-file='/usr/share/fedora-logos/fedora_logo.svg'
 
@@ -48,7 +52,6 @@ active-chart='rings'
 window-maximized=false
 
 [org/gnome/books]
-night-mode=true
 window-maximized=false
 
 [org/gnome/boxes]
@@ -62,7 +65,7 @@ angle-units='degrees'
 base=10
 button-mode='basic'
 number-format='automatic'
-refresh-interval=604800
+refresh-interval=86400
 show-thousands=true
 show-zeroes=false
 source-currency='EUR'
@@ -100,7 +103,7 @@ last-panel='usage'
 folder-children=['05ae49fd-b03a-4b58-9aca-aa5b0ba26556', '15c6ecf1-66f4-4d5f-974c-a9aa46de5edf', '2b5c73bd-b97a-4b66-aaed-a69f68eba2ac', '3c7908f9-82cc-4e98-90e6-3355ade6ecfc', '4178b274-3eb9-4964-926f-aa8c94c2bf66', '560c3d29-d8df-4986-ad01-c03203f78598', '69bad05f-81ad-45af-8f6a-9cb91623430a', '74c66ea8-2e4e-4bf1-a584-c7ff115d0b9c', '846acbb7-de8f-4f36-aee9-5c2c9ff181a3', '96b741d2-1eb2-4cb8-9319-394b182ad1cf', 'Utilities', 'YaST']
 
 [org/gnome/desktop/app-folders/folders/05ae49fd-b03a-4b58-9aca-aa5b0ba26556]
-apps=['org.gnome.Contacts.desktop', 'mozilla-thunderbird.desktop', 'skypeforlinux.desktop', 'discord.desktop', 'com.discordapp.Discord.desktop']
+apps=['org.gnome.Contacts.desktop', 'mozilla-thunderbird.desktop', 'skypeforlinux.desktop', 'com.skype.Client.desktop', 'org.signal.Signal.desktop', 'org.telegram.desktop.desktop', 'discord.desktop', 'com.discordapp.Discord.desktop']
 name='Communication'
 translate=false
 
@@ -120,7 +123,7 @@ name='LibreOffice'
 translate=false
 
 [org/gnome/desktop/app-folders/folders/4178b274-3eb9-4964-926f-aa8c94c2bf66]
-apps=['org.gnome.eog.desktop', 'org.gnome.Cheese.desktop', 'org.gnome.Screenshot.desktop', 'org.gnome.Shotwell.desktop', 'darktable.desktop', 'gimp.desktop', 'org.inkscape.Inkscape.desktop']
+apps=['org.gnome.eog.desktop', 'org.gnome.Cheese.desktop', 'org.gnome.Screenshot.desktop', 'org.gnome.Shotwell.desktop', 'darktable.desktop', 'org.darktable.Darktable.desktop', 'gimp.desktop','org.gimp.GIMP.desktop', 'org.inkscape.Inkscape.desktop']
 name='Graphics'
 translate=false
 
@@ -379,11 +382,6 @@ columns-order=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
 sort-col=0
 sort-order=0
 
-[org/gnome/login-screen]
-enable-fingerprint-authentication=false
-enable-password-authentication=true
-enable-smartcard-authentication=false
-
 [org/gnome/logs]
 ignore-warning=true
 
@@ -498,6 +496,12 @@ disabled-extensions=['apps-menu@gnome-shell-extensions.gcampax.github.com', 'pla
 enabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'dash-to-dock@micxgx.gmail.com']
 favorite-apps=['org.gnome.Nautilus.desktop', 'firefox.desktop']
 
+[org/gnome/shell/extensions/caffeine]
+enable-fullscreen=false
+show-indicator=true
+show-notifications=false
+user-enabled=false
+
 [org/gnome/shell/extensions/dash-to-dock]
 animate-show-apps=false
 apply-custom-theme=false
@@ -525,6 +529,9 @@ show-mounts=false
 show-show-apps-button=true
 show-trash=false
 transparency-mode='DEFAULT'
+
+[org/gnome/shell/extensions/netspeed]
+device='wlp2s0'
 
 [org/gnome/shell/extensions/system-monitor]
 battery-batt0-color='#dedddaff'
