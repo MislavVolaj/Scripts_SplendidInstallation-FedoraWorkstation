@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=/usr/bin/dwebp
+Exec=/usr/bin/dwebp %i -o %o
+MimeType=image/x-webp;image/webp;

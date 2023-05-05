@@ -1,0 +1,12 @@
+# "Splendid installation" scripts for Fedora Workstation
+# Copyright (C) 2021 Mislav Volaj
+# Read full copyright notices by viewing the source code of the main menu script or by running it
+#
+# Here follows a list of user pre-defined packages to install from Fedora and RPM Fusion repositories
+# Commented out packages are skipped during installation
+#
+# bluefish
+discord
+# flowblade
+# krita
+# picard

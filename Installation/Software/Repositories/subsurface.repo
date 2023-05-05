@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:dirkhh:Subsurface]
+name=Subsurface
+baseurl=https://download.copr.fedorainfracloud.org/results/dirkhh/Subsurface/fedora-$releasever-$basearch/
+type=rpm-md
+enabled=1
+enabled_metadata=1
+skip_if_unavailable=True
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://download.copr.fedorainfracloud.org/results/dirkhh/Subsurface/pubkey.gpg

@@ -1,0 +1,259 @@
+com.github.johnfactotum.Foliate.library width 1000
+com.github.johnfactotum.Foliate restore-last-file false
+com.github.johnfactotum.Foliate.view prefer-dark-theme true
+com.github.wwmm.easyeffects last-used-input-preset 'Perfect Equalizer'
+com.github.wwmm.easyeffects last-used-output-preset 'Perfect Equalizer'
+com.github.wwmm.easyeffects shutdown-on-window-close true
+com.github.wwmm.easyeffects.streaminputs input-device 'alsa_input.pci-0000_00_1b.0.analog-stereo'
+com.github.wwmm.easyeffects.streamoutputs output-device 'alsa_output.pci-0000_00_1b.0.analog-stereo'
+com.github.wwmm.easyeffects.streamoutputs plugins ['equalizer#0']
+com.github.wwmm.easyeffects use-dark-theme true
+com.github.wwmm.easyeffects window-height 600
+com.github.wwmm.easyeffects window-width 1000
+io.github.celluloid-player.Celluloid autofit-enable false
+io.github.celluloid-player.Celluloid present-window-on-file-open true
+io.github.celluloid-player.Celluloid settings-migrated true
+io.github.celluloid-player.Celluloid.window-state height 600
+io.github.celluloid-player.Celluloid.window-state width 1000
+org.fedorahosted.background-logo-extension logo-file '/usr/share/fedora-logos/fedora_logo.svg'
+org.freedesktop.folks primary-store 'eds:system-address-book'
+org.freedesktop.Tracker3.Miner.Files index-recursive-directories ['&DOCUMENTS', '&MUSIC', '&PICTURES', '&VIDEOS']
+org.freedesktop.Tracker3.Miner.Files index-single-directories ['&DOWNLOAD']
+org.gnome.baobab.ui window-size (1000, 600)
+org.gnome.boxes first-run false
+org.gnome.boxes window-maximized false
+org.gnome.boxes window-size [1000, 600]
+org.gnome.calculator show-thousands true
+org.gnome.calculator source-currency 'EUR'
+org.gnome.calculator target-currency 'USD'
+org.gnome.calculator target-units 'degree'
+org.gnome.calendar weather-settings (true, true, 'Zagreb, Croatia', @mv <(uint32 2, <('Zagreb', 'LDZA', true, [(0.79819723876097581, 0.28041623897151979)], [(0.79936079741340282, 0.27925268031909273)])>)>)
+org.gnome.calendar window-maximized false
+org.gnome.calendar window-size (1000, 600)
+org.gnome.Cheese burst-delay 1000
+org.gnome.Cheese burst-repeat 3
+org.gnome.clocks alarms [{'name': <'Wake up!'>, 'id': <'8500beb799e79aec8038612f63efffdb'>, 'active': <false>, 'hour': <8>, 'minute': <0>, 'days': <[1, 2, 3, 4, 5]>, 'snooze_minutes': <30>, 'ring_minutes': <1>}, {'name': <'Wake up!'>, 'id': <'db8d2f2a0c21583c5128bb4863effff4'>, 'active': <false>, 'hour': <9>, 'minute': <0>, 'days': <[6, 7]>, 'snooze_minutes': <30>, 'ring_minutes': <1>}]
+org.gnome.clocks.state.window size (1000, 600)
+org.gnome.clocks world-clocks [{'location': <(uint32 2, <('Zagreb', 'LDZA', true, [(0.79819723876097581, 0.28041623897151979)], [(0.79936079741340282, 0.27925268031909273)])>)>}]
+org.gnome.Connections first-run false
+org.gnome.Contacts did-initial-setup true
+org.gnome.Contacts sort-on-surname true
+org.gnome.Contacts window-width 1000
+org.gnome.desktop.app-folders folder-children ['05ae49fd-b03a-4b58-9aca-aa5b0ba26556', '15c6ecf1-66f4-4d5f-974c-a9aa46de5edf', '2b5c73bd-b97a-4b66-aaed-a69f68eba2ac', '3c7908f9-82cc-4e98-90e6-3355ade6ecfc', '4178b274-3eb9-4964-926f-aa8c94c2bf66', '560c3d29-d8df-4986-ad01-c03203f78598', '69bad05f-81ad-45af-8f6a-9cb91623430a', '74c66ea8-2e4e-4bf1-a584-c7ff115d0b9c', '846acbb7-de8f-4f36-aee9-5c2c9ff181a3', '96b741d2-1eb2-4cb8-9319-394b182ad1cf', 'Utilities', 'YaST']
+org.gnome.desktop.calendar show-weekdate true
+org.gnome.desktop.input-sources mru-sources [('xkb', 'hr'), ('xkb', 'cz'), ('xkb', 'us')]
+org.gnome.desktop.input-sources sources [('xkb', 'hr'), ('xkb', 'cz'), ('xkb', 'us')]
+org.gnome.desktop.input-sources xkb-options ['grp:alts_toggle', 'compose:rctrl', 'ctrl:aa_ctrl', 'eurosign:e', 'lv3:lalt_switch']
+org.gnome.desktop.interface clock-show-date false
+org.gnome.desktop.interface font-antialiasing 'rgba'
+org.gnome.desktop.interface gtk-enable-primary-paste false
+org.gnome.desktop.interface gtk-im-module 'gtk-im-context-simple'
+org.gnome.desktop.interface locate-pointer true
+org.gnome.desktop.media-handling autorun-never true
+org.gnome.desktop.media-handling autorun-x-content-ignore ['x-content/audio-cdda', 'x-content/audio-dvd', 'x-content/audio-player', 'x-content/blank-bd', 'x-content/blank-cd', 'x-content/blank-dvd', 'x-content/blank-hddvd', 'x-content/ebook-reader', 'x-content/image-dcf', 'x-content/image-picturecd', 'x-content/ostree-repository', 'x-content/software', 'x-content/unix-software', 'x-content/video-bluray', 'x-content/video-dvd', 'x-content/video-hddvd', 'x-content/video-svcd', 'x-content/video-vcd', 'x-content/win32-software']
+org.gnome.desktop.media-handling autorun-x-content-start-app @as []
+org.gnome.desktop.notifications application-children ['gnome-power-panel', 'gnome-network-panel', 'org-freedesktop-problems-applet', 'xdg-desktop-portal-gnome', 'org-gnome-extensions-desktop', 'org-gnome-software', 'org-gnome-terminal', 'org-gnome-clocks', 'org-gnome-nautilus', 'org-gnome-fileroller', 'org-gnome-gedit', 'org-gnome-texteditor', 'org-gnome-evince', 'firefox', 'mozilla-thunderbird', 'eog', 'org-gnome-rhythmbox3', 'vlc']
+org.gnome.desktop.notifications show-in-lock-screen false
+org.gnome.desktop.peripherals.mouse double-click 500
+org.gnome.desktop.peripherals.touchpad speed 0.0
+org.gnome.desktop.peripherals.touchpad tap-to-click true
+org.gnome.desktop.privacy disable-camera true
+org.gnome.desktop.privacy disable-microphone true
+org.gnome.desktop.privacy old-files-age uint32 7
+org.gnome.desktop.privacy recent-files-max-age 7
+org.gnome.desktop.privacy remove-old-temp-files true
+org.gnome.desktop.privacy remove-old-trash-files true
+org.gnome.desktop.screensaver lock-delay uint32 600
+org.gnome.desktop.search-providers disabled ['org.gnome.Calculator.desktop', 'org.gnome.Characters.desktop', 'firefox.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Software.desktop', 'org.gnome.Boxes.desktop']
+org.gnome.desktop.search-providers enabled ['org.gnome.Weather.desktop']
+org.gnome.desktop.search-providers sort-order ['org.gnome.Nautilus.desktop', 'org.gnome.Documents.desktop', 'org.gnome.Notes.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.clocks.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Weather.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Characters.desktop', 'firefox.desktop', 'org.gnome.seahorse.Application.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Software.desktop', 'org.gnome.Boxes.desktop']
+org.gnome.desktop.session idle-delay uint32 600
+org.gnome.desktop.sound theme-name 'freedesktop'
+org.gnome.desktop.wm.preferences action-double-click-titlebar 'none'
+org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+org.gnome.desktop.wm.preferences visual-bell-type 'frame-flash'
+org.gnome.eog.plugins active-plugins ['exif-display', 'fullscreen', 'map']
+org.gnome.eog.ui image-gallery true
+org.gnome.eog.ui statusbar true
+org.gnome.eog.view background-color 'rgb(0,0,0)'
+org.gnome.Evince.Default continuous true
+org.gnome.Evince.Default dual-page true
+org.gnome.Evince.Default dual-page-odd-left false
+org.gnome.Evince.Default enable-spellchecking true
+org.gnome.Evince.Default fullscreen false
+org.gnome.Evince.Default inverted-colors false
+org.gnome.Evince.Default show-sidebar true
+org.gnome.Evince.Default sidebar-page 'links'
+org.gnome.Evince.Default sizing-mode 'automatic'
+org.gnome.evolution-data-server migrated true
+org.gnome.Evolution.DefaultSources default-address-book 'system-address-book'
+org.gnome.FileRoller.Dialogs.Add current-folder 'file:///home/Mislav'
+org.gnome.FileRoller.Dialogs.Add include-files '*'
+org.gnome.FileRoller.Dialogs.New default-extension '.zip'
+org.gnome.FileRoller.Dialogs.New expand-options true
+org.gnome.FileRoller.Listing show-path false
+org.gnome.FileRoller.UI view-sidebar true
+org.gnome.FileRoller.UI window-height 600
+org.gnome.FileRoller.UI window-width 1000
+org.gnome.gedit.plugins active-plugins ['bracketcompletion', 'charmap', 'docinfo', 'filebrowser', 'joinlines', 'multiedit', 'quickhighlight', 'quickopen', 'snippets', 'sort', 'spell', 'textsize', 'time', 'wordcompletion']
+org.gnome.gedit.plugins.filebrowser root 'file:///'
+org.gnome.gedit.plugins.filebrowser virtual-root 'file:///home/Mislav'
+org.gnome.gedit.plugins.spell highlight-misspelled true
+org.gnome.gedit.plugins.time custom-format '%d.%m.%Y. %H:%M:%S'
+org.gnome.gedit.plugins.time prompt-type 'use-custom-format'
+org.gnome.gedit.preferences.editor auto-save true
+org.gnome.gedit.preferences.editor scheme 'nord-gedit'
+org.gnome.gedit.preferences.ui side-panel-visible true
+org.gnome.gedit.state.file-chooser open-recent false
+org.gnome.gedit.state.window bottom-panel-active-page 'GeditExternalToolsShellOutput'
+org.gnome.gedit.state.window side-panel-active-page 'GeditFileBrowserPanel'
+org.gnome.gedit.state.window size (1000, 600)
+org.gnome.gedit.state.window state 87168
+org.gnome.gnome-system-monitor disks-interval 4000
+org.gnome.gnome-system-monitor.disktreenew col-4-visible true
+org.gnome.gnome-system-monitor.disktreenew col-6-width 0
+org.gnome.gnome-system-monitor.disktreenew columns-order [0, 1, 2, 3, 4, 5, 6]
+org.gnome.gnome-system-monitor.disktreenew sort-col 0
+org.gnome.gnome-system-monitor.disktreenew sort-order 1
+org.gnome.gnome-system-monitor graph-update-interval 2000
+org.gnome.gnome-system-monitor.proctree columns-order [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+org.gnome.gnome-system-monitor show-dependencies true
+org.gnome.gnome-system-monitor update-interval 2000
+org.gnome.gnome-system-monitor window-state (1000, 600, 0, 0)
+org.gnome.Logs ignore-warning true
+org.gnome.Maps last-viewed-location [45.835948000000002, 16.004528000000001]
+org.gnome.Maps transportation-type 'car'
+org.gnome.Maps window-maximized false
+org.gnome.Maps window-size [1000, 600]
+org.gnome.Maps zoom-level 15
+org.gnome.Music window-maximized false
+org.gnome.mutter center-new-windows true
+org.gnome.mutter workspaces-only-on-primary false
+org.gnome.nautilus.icon-view captions ['size', 'none', 'none']
+org.gnome.nautilus.list-view default-column-order ['name', 'size', 'type', 'owner', 'group', 'permissions', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency', 'starred', 'detailed_type']
+org.gnome.nautilus.list-view default-visible-columns ['name', 'size', 'type', 'date_modified', 'starred']
+org.gnome.nautilus.list-view use-tree-view true
+org.gnome.nautilus.preferences click-policy 'single'
+org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+org.gnome.nautilus.preferences migrated-gtk-settings true
+org.gnome.nautilus.preferences show-create-link true
+org.gnome.nautilus.preferences show-delete-permanently true
+org.gnome.nautilus.window-state initial-size (1000, 600)
+org.gnome.Notes window-size (1000, 600)
+org.gnome.photos window-maximized false
+org.gnome.photos window-size [1000, 600]
+org.gnome.power-manager info-history-type 'charge'
+org.gnome.power-manager info-last-device '/org/freedesktop/UPower/devices/battery_BAT0'
+org.gnome.power-manager info-stats-type 'discharge-accuracy'
+org.gnome.rhythmbox.encoding-settings media-type 'audio/mpeg'
+org.gnome.rhythmbox.encoding-settings media-type-presets {'audio/mpeg': 'rhythmbox-custom-settings-cbr'}
+org.gnome.rhythmbox.library layout-filename '%ta - %tt'
+org.gnome.rhythmbox.plugins active-plugins ['android', 'artsearch', 'audiocd', 'cd-recorder', 'daap', 'dbus-media-server', 'fmradio', 'generic-player', 'im-status', 'iradio', 'lyrics', 'mpris', 'mtpdevice', 'notification', 'power-manager', 'rb', 'replaygain']
+org.gnome.rhythmbox.plugins.iradio initial-stations-loaded true
+org.gnome.rhythmbox.plugins seen-plugins ['artsearch', 'audioscrobbler', 'cd-recorder', 'daap', 'dbus-media-server', 'fmradio', 'grilo', 'im-status', 'ipod', 'listenbrainz', 'lyrics', 'magnatude', 'mpris', 'mtpdevice', 'notification', 'pythonconsole', 'rb', 'rbzeitgeist', 'replaygain', 'webremote', 'magnatune']
+org.gnome.rhythmbox.podcast download-interval 'manual'
+org.gnome.rhythmbox.podcast download-location 'file:///home/Mislav/Music'
+org.gnome.rhythmbox.podcast-source paned-position 60
+org.gnome.rhythmbox queue-as-sidebar true
+org.gnome.rhythmbox.rhythmdb locations ['file:///home/Mislav/Music']
+org.gnome.rhythmbox.rhythmdb monitor-library true
+org.gnome.rhythmbox size (1000, 600)
+org.gnome.rhythmbox.sources visible-columns ['post-time', 'date', 'artist', 'album', 'track-number', 'duration', 'genre', 'bitrate']
+org.gnome.rhythmbox.source paned-position 60
+org.gnome.seahorse.manager item-filter 'any'
+org.gnome.seahorse.manager keyrings-selected ['secret-service:///org/freedesktop/secrets/collection/login']
+org.gnome.settings-daemon.plugins.color night-light-enabled true
+org.gnome.settings-daemon.plugins.color night-light-last-coordinates (45.835948000000000, 16.004528000000000)
+org.gnome.settings-daemon.plugins.color night-light-temperature uint32 3200
+org.gnome.settings-daemon.plugins.power power-button-action 'interactive'
+org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 7200
+org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 3600
+org.gnome.Settings last-panel 'usage'
+org.gnome.Settings window-state (1000, 600, false)
+org.gnome.shell app-picker-layout [{'org.gnome.FileRoller.desktop': <{'position': <0>}>, 'transmission-gtk.desktop': <{'position': <1>}>, '05ae49fd-b03a-4b58-9aca-aa5b0ba26556': <{'position': <2>}>, '15c6ecf1-66f4-4d5f-974c-a9aa46de5edf': <{'position': <3>}>, 'org.gnome.gedit.desktop': <{'position': <4>}>, 'org.gnome.Calculator.desktop': <{'position': <5>}>, '2b5c73bd-b97a-4b66-aaed-a69f68eba2ac': <{'position': <6>}>, '3c7908f9-82cc-4e98-90e6-3355ade6ecfc': <{'position': <7>}>, 'code.desktop': <{'position': <8>}>, 'subsurface.desktop': <{'position': <9>}>, 'org.gnome.Photos.desktop': <{'position': <10>}>, '4178b274-3eb9-4964-926f-aa8c94c2bf66': <{'position': <11>}>, 'org.gnome.Music.desktop': <{'position': <12>}>, '560c3d29-d8df-4986-ad01-c03203f78598': <{'position': <13>}>, 'org.gnome.Totem.desktop': <{'position': <14>}>, '69bad05f-81ad-45af-8f6a-9cb91623430a': <{'position': <15>}>, 'Utilities': <{'position': <16>}>, '74c66ea8-2e4e-4bf1-a584-c7ff115d0b9c': <{'position': <17>}>, '846acbb7-de8f-4f36-aee9-5c2c9ff181a3': <{'position': <18>}>, '96b741d2-1eb2-4cb8-9319-394b182ad1cf': <{'position': <19>}>, 'org.gnome.Software.desktop': <{'position': <20>}>}]
+org.gnome.shell disabled-extensions ['apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'horizontal-workspaces@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'background-logo@fedorahosted.org', 'gamemode@christian.kellner.me', 'netspeed@hedayaty.gmail.com']
+org.gnome.shell enabled-extensions ['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'dash-to-dock@micxgx.gmail.com', 'Vitals@CoreCoding.com', 'caffeine@patapon.info']
+org.gnome.shell.extensions.dash-to-dock animate-show-apps false
+org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
+org.gnome.shell.extensions.dash-to-dock background-color '#2e3436'
+org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
+org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
+org.gnome.shell.extensions.dash-to-dock multi-monitor true
+org.gnome.shell.extensions.dash-to-dock preferred-monitor 0
+org.gnome.shell.extensions.dash-to-dock scroll-action 'cycle-windows'
+org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+org.gnome.shell.extensions.dash-to-dock show-mounts false
+org.gnome.shell.extensions.dash-to-dock show-trash false
+org.gnome.shell.extensions.netspeed device 'wlp2s0'
+org.gnome.shell.extensions.window-list grouping-mode 'auto'
+org.gnome.shell favorite-apps ['org.gnome.Nautilus.desktop', 'firefox.desktop']
+org.gnome.shell last-selected-power-profile 'power-saver'
+org.gnome.shell.weather automatic-location true
+org.gnome.shell.weather locations [<(uint32 2, <('Zagreb', 'LDZA', true, [(0.79819723876097581, 0.28041623897151979)], [(0.79936079741340282, 0.27925268031909273)])>)>]
+org.gnome.shell welcome-dialog-last-shown-version '44.0'
+org.gnome.shell.world-clocks locations [<(uint32 2, <('Zagreb', 'LDZA', true, [(0.79819723876097581, 0.28041623897151979)], [(0.79936079741340282, 0.27925268031909273)])>)>]
+org.gnome.shotwell.plugins.enable-state publishing-flickr false
+org.gnome.shotwell.plugins.enable-state publishing-piwigo false
+org.gnome.shotwell.preferences.editing external-photo-editor 'gimp-2.10 %U'
+org.gnome.shotwell.preferences.editing external-raw-editor '/usr/bin/darktable %U'
+org.gnome.shotwell.preferences.files auto-import true
+org.gnome.shotwell.preferences.files commit-metadata true
+org.gnome.shotwell.preferences.files directory-pattern '%Y/%m'
+org.gnome.shotwell.preferences.files import-dir '/home/Mislav/Pictures'
+org.gnome.shotwell.preferences.files use-lowercase-filenames true
+org.gnome.shotwell.preferences.ui:/org/gnome/shotwell/preferences/ui/ display-event-comments true
+org.gnome.shotwell.preferences.ui:/org/gnome/shotwell/preferences/ui/ display-photo-comments true
+org.gnome.shotwell.preferences.ui:/org/gnome/shotwell/preferences/ui/ display-photo-titles true
+org.gnome.shotwell.preferences.ui:/org/gnome/shotwell/preferences/ui/ display-search-bar true
+org.gnome.shotwell.preferences.ui:/org/gnome/shotwell/preferences/ui/ show-welcome-dialog false
+org.gnome.shotwell.preferences.window library-height 600
+org.gnome.shotwell.preferences.window library-width 1000
+org.gnome.SimpleScan page-delay 3000
+org.gnome.SimpleScan paper-height 2970
+org.gnome.SimpleScan paper-width 2100
+org.gnome.SimpleScan photo-dpi 1200
+org.gnome.SimpleScan postproc-enabled true
+org.gnome.SimpleScan text-dpi 300
+org.gnome.software allow-updates false
+org.gnome.software check-timestamp int64 1676228400
+org.gnome.software download-updates false
+org.gnome.software download-updates-notify false
+org.gnome.software first-run false
+org.gnome.software flatpak-purge-timestamp int64 1676228400
+org.gnome.software online-updates-timestamp int64 1676228400
+org.gnome.software upgrade-notification-timestamp int64 1676228400
+org.gnome.SoundRecorder audio-profile 'mp3'
+org.gnome.system.locale region 'hr_HR.UTF-8'
+org.gnome.system.location enabled true
+org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
+org.gnome.Terminal.Legacy.Settings new-terminal-mode 'tab'
+org.gnome.Terminal.ProfilesList default 'b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+org.gnome.Terminal.ProfilesList list ['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']
+org.gnome.TextEditor highlight-current-line true
+org.gnome.TextEditor restore-session false
+org.gnome.TextEditor show-line-numbers true
+org.gnome.todo window-maximized false
+org.gnome.totem active-plugins ['vimeo', 'variable-rate', 'skipto', 'screenshot', 'screensaver', 'save-file', 'rotation', 'recent', 'movie-properties', 'opensubtitles', 'open-directory', 'mpris', 'totem-im-status', 'autoload-subtitles', 'apple-trailers']
+org.gnome.tweaks show-extensions-notice false
+org.gnome.Weather locations [<(uint32 2, <('Zagreb', 'LDZA', true, [(0.79819723876097581, 0.28041623897151979)], [(0.79936079741340282, 0.27925268031909273)])>)>]
+org.gnome.World.Secrets dark-theme true
+org.gnome.World.Secrets database-lock-timeout 10
+org.gnome.World.Secrets generator-use-numbers true
+org.gnome.World.Secrets generator-use-symbols true
+org.gnome.World.Secrets sort-order 'a-z'
+org.gnome.World.Secrets window-size [1000, 600]
+org.gtk.gtk4.Settings.FileChooser show-hidden true
+org.gtk.gtk4.Settings.FileChooser sidebar-width 160
+org.gtk.gtk4.Settings.FileChooser sort-directories-first true
+org.gtk.gtk4.Settings.FileChooser window-size (1000, 600)
+org.gtk.Settings.FileChooser show-hidden true
+org.gtk.Settings.FileChooser sidebar-width 160
+org.gtk.Settings.FileChooser sort-directories-first true
+org.gtk.Settings.FileChooser window-size (1000, 600)
+org.soundconverter mp3-cbr-quality 320
+org.soundconverter mp3-mode 'cbr'
+org.soundconverter number-of-jobs 4
+org.soundconverter output-mime-type 'audio/mpeg'
+org.soundconverter output-resample true
+org.soundconverter replace-messy-chars true

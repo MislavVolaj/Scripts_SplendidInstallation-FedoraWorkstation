@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:dawid:better_fonts]
+name=Better Fonts
+baseurl=https://download.copr.fedorainfracloud.org/results/dawid/better_fonts/fedora-$releasever-$basearch/
+type=rpm-md
+enabled=1
+enabled_metadata=1
+skip_if_unavailable=True
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://download.copr.fedorainfracloud.org/results/dawid/better_fonts/pubkey.gpg
